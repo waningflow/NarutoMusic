@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import styles from './Sidebar.css'
+import styles from './Footer.css';
 
-export default class Sidebar extends Component {
+export default class Footer extends Component {
   render() {
     return (
       <div className={styles.container}>
-        
+        <div className={styles.stepline}></div>
       </div>
     )
   }
