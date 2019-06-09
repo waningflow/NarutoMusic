@@ -1,5 +1,5 @@
 .container{
-  height: 60px;
-  background-color: indianred;
+  height: 50px;
+  background-color: #d85047;
   -webkit-app-region: drag;
 }
