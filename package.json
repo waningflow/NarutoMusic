@@ -2,7 +2,7 @@
   "name": "naruto-music",
   "productName": "NarutoMusic",
   "version": "0.1.0",
-  "description": "网易云音乐复刻精简版",
+  "description": "网易云音乐精简版",
   "scripts": {
     "build": "concurrently \"yarn build-main\" \"yarn build-renderer\"",
     "build-dll": "cross-env NODE_ENV=development webpack --config ./configs/webpack.config.renderer.dev.dll.babel.js --colors",
