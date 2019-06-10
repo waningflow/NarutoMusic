@@ -6,6 +6,7 @@ export default class Footer extends Component {
     return (
       <div className={styles.container}>
         <div className={styles.stepline}></div>
+        <div>Footer</div>
       </div>
     )
   }

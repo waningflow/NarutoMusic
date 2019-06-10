@@ -1,0 +1,10 @@
+.container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  padding-top: 50px;
+  padding-bottom: 58px;
+  color: #000;
+}
