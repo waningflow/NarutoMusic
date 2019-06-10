@@ -3,10 +3,10 @@ import { Switch, Route } from 'react-router';
 import routes from './constants/routes';
 
 import Home from './components/Home';
-import Header from './components/Header';
-import Sidebar from './components/Sidebar';
-import Footer from './components/Footer';
-import Content from './components/Content';
+import Header from './containers/Header';
+import Sidebar from './containers/Sidebar';
+import Footer from './containers/Footer';
+import Content from './containers/Content';
 
 import Layout from './containers/Layout';
 
@@ -17,9 +17,9 @@ export default () => (
       Sidebar={Sidebar}
       Content={() => (
         <Content>
-          {/* <Switch>
+          <Switch>
             <Route path={routes.HOME} component={Home} />
-          </Switch> */}
+          </Switch>
         </Content>
       )}
       Footer={Footer}

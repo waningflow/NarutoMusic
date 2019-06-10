@@ -1,9 +1,0 @@
-.container{
-  width: 100vw;
-  height: 50px;
-  background-color: #d85047;
-  -webkit-app-region: drag;
-  position: fixed;
-  top: 0;
-  left: 0;
-}
