@@ -121,7 +121,7 @@ export default merge.smart(baseConfig, {
           {
             loader: 'css-loader',
             options: {
-              modules: true,
+              // modules: true,
               importLoaders: 1,
               localIdentName: '[name]__[local]__[hash:base64:5]',
               sourceMap: true
@@ -132,14 +132,14 @@ export default merge.smart(baseConfig, {
             options: {
               javascriptEnabled: true
             }
+          },
+          {
+            loader: 'style-resources-loader',
+            options: {
+              patterns: path.resolve(__dirname, '../app/styles/*.less'),
+              injector: 'append'
+            }
           }
-          // {
-          //   loader: 'style-resources-loader',
-          //   options: {
-          //     patterns: path.resolve(__dirname, '../app/styles/*.less'),
-          //     injector: 'append'
-          //   }
-          // }
         ]
       },
       // WOFF Font

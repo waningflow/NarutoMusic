@@ -35,7 +35,7 @@ export default class ProfileBar extends Component<Props, State> {
           login
         </Button>
         <Modal show={showLoginModal} onHide={this.close} size="xs">
-          <Modal.Header closeButton={false}>
+          <Modal.Header>
             <Modal.Title>Modal Title</Modal.Title>
           </Modal.Header>
           <Modal.Body />
