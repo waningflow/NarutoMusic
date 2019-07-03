@@ -208,6 +208,7 @@
     "sinon": "^7.3.1",
     "spectron": "^5.0.0",
     "style-loader": "^0.23.1",
+    "style-resources-loader": "^1.2.1",
     "stylelint": "^9.10.1",
     "stylelint-config-prettier": "^5.0.0",
     "stylelint-config-standard": "^18.2.0",

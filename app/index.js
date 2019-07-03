@@ -4,7 +4,9 @@ import { AppContainer as ReactHotAppContainer } from 'react-hot-loader';
 import Root from './containers/Root';
 import { configureStore, history } from './store/configureStore';
 import './app.global.css';
-import './custom-styles.less';
+// import 'rsuite/styles/less/index.less';
+// import './custom-styles.less';
+import './styles/index.less';
 
 const store = configureStore();
 

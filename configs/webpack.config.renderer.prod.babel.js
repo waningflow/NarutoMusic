@@ -119,7 +119,13 @@ export default merge.smart(baseConfig, {
             loader: MiniCssExtractPlugin.loader
           },
           {
-            loader: 'css-loader'
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              importLoaders: 1,
+              localIdentName: '[name]__[local]__[hash:base64:5]',
+              sourceMap: true
+            }
           },
           {
             loader: 'less-loader',
@@ -127,6 +133,13 @@ export default merge.smart(baseConfig, {
               javascriptEnabled: true
             }
           }
+          // {
+          //   loader: 'style-resources-loader',
+          //   options: {
+          //     patterns: path.resolve(__dirname, '../app/styles/*.less'),
+          //     injector: 'append'
+          //   }
+          // }
         ]
       },
       // WOFF Font

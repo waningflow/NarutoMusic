@@ -147,7 +147,13 @@ export default merge.smart(baseConfig, {
             loader: 'style-loader' // creates style nodes from JS strings
           },
           {
-            loader: 'css-loader' // translates CSS into CommonJS
+            loader: 'css-loader', // translates CSS into CommonJS
+            options: {
+              modules: true,
+              sourceMap: true,
+              importLoaders: 1,
+              localIdentName: '[name]__[local]__[hash:base64:5]'
+            }
           },
           {
             loader: 'less-loader', // compiles Less to CSS
@@ -155,6 +161,13 @@ export default merge.smart(baseConfig, {
               javascriptEnabled: true
             }
           }
+          // {
+          //   loader: 'style-resources-loader',
+          //   options: {
+          //     patterns: path.resolve(__dirname, '../app/styles/*.less'),
+          //     injector: 'append'
+          //   }
+          // }
         ]
       },
       // WOFF Font
