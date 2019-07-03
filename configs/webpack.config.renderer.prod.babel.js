@@ -136,7 +136,10 @@ export default merge.smart(baseConfig, {
           {
             loader: 'style-resources-loader',
             options: {
-              patterns: path.resolve(__dirname, '../app/styles/*.less'),
+              patterns: path.resolve(
+                __dirname,
+                '../app/styles/custom-theme.less'
+              ),
               injector: 'append'
             }
           }
