@@ -1,7 +1,8 @@
 // @flow
 import React, { Component } from 'react';
-import { Button, Modal } from 'rsuite';
-// import styles from './ProfileBar.css';
+import { Button } from 'rsuite';
+import './ProfileBar.less';
+import Dialog from '../../shared/Dialog';
 
 type Props = {};
 type State = { showLoginModal: boolean };
@@ -34,20 +35,13 @@ export default class ProfileBar extends Component<Props, State> {
         <Button appearance="primary" onClick={this.open}>
           login
         </Button>
-        <Modal show={showLoginModal} onHide={this.close} size="xs">
-          <Modal.Header>
-            <Modal.Title>Modal Title</Modal.Title>
-          </Modal.Header>
-          <Modal.Body />
-          <Modal.Footer>
-            <Button onClick={this.close} appearance="primary">
-              Ok
-            </Button>
-            <Button onClick={this.close} appearance="subtle">
-              Cancel
-            </Button>
-          </Modal.Footer>
-        </Modal>
+        <Dialog
+          show={showLoginModal}
+          onHide={this.close}
+          className="login_dialog"
+        >
+          <div>login board</div>
+        </Dialog>
       </div>
     );
   }
