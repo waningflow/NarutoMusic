@@ -1,12 +1,12 @@
 // @flow
-import React, { Component } from 'react';
+import * as React from 'react';
 import styles from './Content.css';
 
 type Props = {
   children: React.Node
 };
 
-export default class Content extends Component<Props> {
+export default class Content extends React.Component<Props> {
   props: Props;
 
   render() {
