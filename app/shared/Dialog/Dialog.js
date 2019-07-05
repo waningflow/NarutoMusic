@@ -1,6 +1,7 @@
 // @flow
 import * as React from 'react';
-import { Modal } from 'rsuite';
+import { Modal, Icon } from 'rsuite';
+import './Dialog.less';
 
 type Props = {
   show: boolean,
@@ -17,6 +18,7 @@ export default class Dialog extends React.Component<Props> {
     const { show, onHide, children, ...props } = this.props;
     return (
       <Modal show={show} onHide={onHide} size="xs">
+        <Icon icon="close" className="dialog_close_btn" onClick={onHide} />
         <Modal.Body {...props}>{children}</Modal.Body>
       </Modal>
     );
