@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { Button } from 'rsuite';
+// import { Button } from 'rsuite';
 import './ProfileBar.less';
 import Dialog from '../../shared/Dialog';
 
@@ -30,11 +30,23 @@ export default class ProfileBar extends Component<Props, State> {
   render() {
     const { showLoginModal } = this.state;
     return (
-      <div>
-        未登录
-        <Button appearance="primary" onClick={this.open}>
-          login
-        </Button>
+      <div className="profilebar">
+        <div
+          className="profilebar_icon"
+          onClick={this.open}
+          onKeyPress={this.open}
+          role="button"
+          tabIndex="0"
+        />
+        <div
+          className="profilebar_msg"
+          onClick={this.open}
+          onKeyPress={this.open}
+          role="button"
+          tabIndex="0"
+        >
+          未登录
+        </div>
         <Dialog
           show={showLoginModal}
           onHide={this.close}
