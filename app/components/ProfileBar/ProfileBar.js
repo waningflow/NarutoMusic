@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { InputGroup, Input, Icon } from 'rsuite';
+import { InputGroup, Input, Icon, Button } from 'rsuite';
 import './ProfileBar.less';
 import Dialog from '../../shared/Dialog';
 
@@ -57,10 +57,19 @@ export default class ProfileBar extends Component<Props, State> {
             <div className="login_input_container">
               <InputGroup inside>
                 <InputGroup.Addon>
-                  <Icon icon="avatar" />
+                  <Icon icon="mobile" />
                 </InputGroup.Addon>
-                <Input />
+                <Input placeholder="请输入手机号" />
               </InputGroup>
+              <InputGroup inside style={{ marginTop: '15px' }}>
+                <InputGroup.Addon>
+                  <Icon icon="lock" />
+                </InputGroup.Addon>
+                <Input placeholder="请输入密码" />
+              </InputGroup>
+              <Button appearance="primary" className="login_confirm_btn">
+                登录
+              </Button>
             </div>
           </div>
         </Dialog>
