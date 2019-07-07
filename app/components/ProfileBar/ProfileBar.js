@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-// import { Button } from 'rsuite';
+import { InputGroup, Input, Icon } from 'rsuite';
 import './ProfileBar.less';
 import Dialog from '../../shared/Dialog';
 
@@ -50,9 +50,19 @@ export default class ProfileBar extends Component<Props, State> {
         <Dialog
           show={showLoginModal}
           onHide={this.close}
-          className="login_dialog"
+          modalStyle={{}}
+          contentClass="login_dialog"
         >
-          <div>login board</div>
+          <div className="login_dialog_container">
+            <div className="login_input_container">
+              <InputGroup inside>
+                <InputGroup.Addon>
+                  <Icon icon="avatar" />
+                </InputGroup.Addon>
+                <Input />
+              </InputGroup>
+            </div>
+          </div>
         </Dialog>
       </div>
     );
