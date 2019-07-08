@@ -65,7 +65,7 @@ export default class ProfileBar extends Component<Props, State> {
                 <InputGroup.Addon>
                   <Icon icon="lock" />
                 </InputGroup.Addon>
-                <Input placeholder="请输入密码" />
+                <Input placeholder="请输入密码" type="password" />
               </InputGroup>
               <Button appearance="primary" className="login_confirm_btn">
                 登录
