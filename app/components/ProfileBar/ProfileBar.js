@@ -29,8 +29,10 @@ export default class ProfileBar extends Component<Props, State> {
     });
   };
 
-  handleChangeInput = event => {
-    console.log(event);
+  handleChangeInput = (name: string) => (value: string) => {
+    this.setState({
+      [name]: value
+    });
   };
 
   render() {
@@ -68,7 +70,7 @@ export default class ProfileBar extends Component<Props, State> {
                 <Input
                   placeholder="请输入手机号"
                   value={phone}
-                  onChange={this.handleChangeInput}
+                  onChange={this.handleChangeInput('phone')}
                 />
               </InputGroup>
               <InputGroup inside style={{ marginTop: '15px' }}>
@@ -79,7 +81,7 @@ export default class ProfileBar extends Component<Props, State> {
                   placeholder="请输入密码"
                   type="password"
                   value={password}
-                  onChange={this.handleChangeInput}
+                  onChange={this.handleChangeInput('password')}
                 />
               </InputGroup>
               <Button appearance="primary" className="login_confirm_btn">
