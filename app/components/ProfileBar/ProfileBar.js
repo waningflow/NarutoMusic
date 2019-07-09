@@ -5,13 +5,15 @@ import './ProfileBar.less';
 import Dialog from '../../shared/Dialog';
 
 type Props = {};
-type State = { showLoginModal: boolean };
+type State = { showLoginModal: boolean, phone: string, password: string };
 
 export default class ProfileBar extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      showLoginModal: false
+      showLoginModal: false,
+      phone: '',
+      password: ''
     };
   }
 
@@ -27,8 +29,12 @@ export default class ProfileBar extends Component<Props, State> {
     });
   };
 
+  handleChangeInput = event => {
+    console.log(event);
+  };
+
   render() {
-    const { showLoginModal } = this.state;
+    const { showLoginModal, phone, password } = this.state;
     return (
       <div className="profilebar">
         <div
@@ -59,13 +65,22 @@ export default class ProfileBar extends Component<Props, State> {
                 <InputGroup.Addon>
                   <Icon icon="mobile" />
                 </InputGroup.Addon>
-                <Input placeholder="请输入手机号" />
+                <Input
+                  placeholder="请输入手机号"
+                  value={phone}
+                  onChange={this.handleChangeInput}
+                />
               </InputGroup>
               <InputGroup inside style={{ marginTop: '15px' }}>
                 <InputGroup.Addon>
                   <Icon icon="lock" />
                 </InputGroup.Addon>
-                <Input placeholder="请输入密码" type="password" />
+                <Input
+                  placeholder="请输入密码"
+                  type="password"
+                  value={password}
+                  onChange={this.handleChangeInput}
+                />
               </InputGroup>
               <Button appearance="primary" className="login_confirm_btn">
                 登录
