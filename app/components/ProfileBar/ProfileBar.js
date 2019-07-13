@@ -1,13 +1,15 @@
 // @flow
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { InputGroup, Input, Icon, Button } from 'rsuite';
 import './ProfileBar.less';
 import Dialog from '../../shared/Dialog';
+import { login } from '../../actions/user';
 
 type Props = {};
 type State = { showLoginModal: boolean, phone: string, password: string };
 
-export default class ProfileBar extends Component<Props, State> {
+class ProfileBar extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -94,3 +96,16 @@ export default class ProfileBar extends Component<Props, State> {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    status: state.status
+  };
+};
+
+const mapDispatchToProps = { login };
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ProfileBar);
