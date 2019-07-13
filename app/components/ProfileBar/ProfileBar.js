@@ -6,7 +6,10 @@ import './ProfileBar.less';
 import Dialog from '../../shared/Dialog';
 import { login } from '../../actions/user';
 
-type Props = {};
+type Props = {
+  loginStatus: string,
+  loginApi: Function
+};
 type State = { showLoginModal: boolean, phone: string, password: string };
 
 class ProfileBar extends Component<Props, State> {
@@ -37,8 +40,14 @@ class ProfileBar extends Component<Props, State> {
     });
   };
 
+  handleClickLogin = () => {
+    const { loginApi } = this.props;
+    loginApi();
+  };
+
   render() {
     const { showLoginModal, phone, password } = this.state;
+    const { loginStatus } = this.props;
     return (
       <div className="profilebar">
         <div
@@ -55,7 +64,7 @@ class ProfileBar extends Component<Props, State> {
           role="button"
           tabIndex="0"
         >
-          未登录
+          {loginStatus}
         </div>
         <Dialog
           show={showLoginModal}
@@ -86,7 +95,11 @@ class ProfileBar extends Component<Props, State> {
                   onChange={this.handleChangeInput('password')}
                 />
               </InputGroup>
-              <Button appearance="primary" className="login_confirm_btn">
+              <Button
+                appearance="primary"
+                className="login_confirm_btn"
+                onClick={this.handleClickLogin}
+              >
                 登录
               </Button>
             </div>
@@ -99,11 +112,11 @@ class ProfileBar extends Component<Props, State> {
 
 const mapStateToProps = state => {
   return {
-    status: state.status
+    loginStatus: state.user.status
   };
 };
 
-const mapDispatchToProps = { login };
+const mapDispatchToProps = { loginApi: login };
 
 export default connect(
   mapStateToProps,
