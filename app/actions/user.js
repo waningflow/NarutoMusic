@@ -1,3 +1,5 @@
+import { sleep } from '../utils/utils';
+
 export const LOGIN_STATUS_UPDATE = 'LOGIN_STATUS_UPDATE';
 
 export function updateStatus(status: string) {
@@ -8,16 +10,15 @@ export function updateStatus(status: string) {
 }
 
 export function login() {
-  return dispatch => {
+  return async dispatch => {
     dispatch({
       type: LOGIN_STATUS_UPDATE,
       value: 'loging'
     });
-    setTimeout(() => {
-      dispatch({
-        type: LOGIN_STATUS_UPDATE,
-        value: 'loged'
-      });
-    }, 1000);
+    await sleep(1000);
+    dispatch({
+      type: LOGIN_STATUS_UPDATE,
+      value: 'loged'
+    });
   };
 }

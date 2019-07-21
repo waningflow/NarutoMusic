@@ -8,7 +8,7 @@ import { login } from '../../actions/user';
 
 type Props = {
   loginStatus: string,
-  loginApi: Function
+  loginApi: Promise
 };
 type State = { showLoginModal: boolean, phone: string, password: string };
 
@@ -40,9 +40,10 @@ class ProfileBar extends Component<Props, State> {
     });
   };
 
-  handleClickLogin = () => {
+  handleClickLogin = async () => {
     const { loginApi } = this.props;
-    loginApi();
+    await loginApi();
+    this.close();
   };
 
   render() {
