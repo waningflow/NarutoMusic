@@ -100,6 +100,7 @@ class ProfileBar extends Component<Props, State> {
                 appearance="primary"
                 className="login_confirm_btn"
                 onClick={this.handleClickLogin}
+                loading={loginStatus === 'loging'}
               >
                 登录
               </Button>
