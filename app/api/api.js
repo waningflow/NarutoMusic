@@ -23,3 +23,10 @@ export function loginWithCellphone(params) {
 export function loginWithEmail(params) {
   return axios.get('/login', { params });
 }
+
+/**
+ * 刷新登录
+ */
+export function loginRefresh() {
+  return axios.get('/login/refresh');
+}
