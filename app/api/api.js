@@ -30,3 +30,22 @@ export function loginWithEmail(params) {
 export function loginRefresh() {
   return axios.get('/login/refresh');
 }
+
+/**
+ * 登录状态
+ *
+ * @return {Object}
+ */
+export function loginStatus() {
+  return axios.get('/login/status');
+}
+
+/**
+ * 邮箱登录
+ *
+ * @param {number} uid
+ * @return {Object}
+ */
+export function userDetail(uid) {
+  return axios.get('/user/detail', { params: { uid } });
+}
