@@ -8,7 +8,7 @@ import { login } from '../../actions/user';
 
 type Props = {
   loginStatus: string,
-  loginApi: Promise
+  loginApi: (params: any) => (dispatch: any) => Promise<any>
 };
 type State = { showLoginModal: boolean, phone: string, password: string };
 
