@@ -49,3 +49,12 @@ export function loginStatus() {
 export function userDetail(uid) {
   return axios.get('/user/detail', { params: { uid } });
 }
+
+/**
+ * 获取用户信息 , 歌单，收藏，mv, dj 数量
+ *
+ * @return {Object}
+ */
+export function userSubcount() {
+  return axios.get('/user/subcount');
+}
