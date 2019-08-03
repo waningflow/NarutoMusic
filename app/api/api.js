@@ -58,3 +58,13 @@ export function userDetail(uid) {
 export function userSubcount() {
   return axios.get('/user/subcount');
 }
+
+/**
+ * 获取用户歌单
+ *
+ * @param {number} uid
+ * @return {Object}
+ */
+export function userPlaylist(uid) {
+  return axios.get('/user/playlist', { params: { uid } });
+}
