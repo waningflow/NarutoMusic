@@ -78,3 +78,13 @@ export function userPlaylist(uid) {
 export function playlistDetail(id) {
   return axios.get('/playlist/detail', { params: { id } });
 }
+
+/**
+ * 获取歌单详情
+ *
+ * @param {number} id 音乐 id，多个用逗号间隔
+ * @return {Object}
+ */
+export function songUrl(id) {
+  return axios.get('/song/url', { params: { id } });
+}
