@@ -9,6 +9,7 @@ import axios from './request';
  * @return {Object}
  */
 export function loginWithCellphone(params) {
+  console.log(params);
   return axios.get('/login/cellphone', { params });
 }
 

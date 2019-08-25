@@ -1,4 +1,4 @@
-// @flow
+/* eslint-disable react/prop-types */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { InputGroup, Input, Icon, Button } from 'rsuite';
@@ -6,14 +6,8 @@ import './ProfileBar.less';
 import Dialog from '../../shared/Dialog';
 import { login } from '../../actions/user';
 
-type Props = {
-  loginStatus: string,
-  loginApi: (params: any) => (dispatch: any) => Promise<any>
-};
-type State = { showLoginModal: boolean, phone: string, password: string };
-
-class ProfileBar extends Component<Props, State> {
-  constructor(props: Props) {
+class ProfileBar extends Component {
+  constructor(props) {
     super(props);
     this.state = {
       showLoginModal: false,
@@ -42,7 +36,8 @@ class ProfileBar extends Component<Props, State> {
 
   handleClickLogin = async () => {
     const { loginApi } = this.props;
-    await loginApi();
+    const { phone, password } = this.state;
+    await loginApi({ phone, password });
     this.close();
   };
 
