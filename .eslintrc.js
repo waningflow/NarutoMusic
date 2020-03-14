@@ -15,7 +15,8 @@ module.exports = {
         prop: 'ignore'
       }
     ],
-    "@typescript-eslint/no-explicit-any": 'off'
+    '@typescript-eslint/no-explicit-any': 'off',
+    'import/prefer-default-export': 'off'
   },
   settings: {
     'import/resolver': {

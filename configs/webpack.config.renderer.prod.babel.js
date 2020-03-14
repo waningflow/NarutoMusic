@@ -208,6 +208,12 @@ export default merge.smart(baseConfig, {
     ]
   },
 
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, '../app')
+    }
+  },
+
   optimization: {
     minimizer: process.env.E2E_BUILD
       ? []

@@ -3,6 +3,11 @@ import { Dispatch, Store } from 'redux';
 
 export type User = {
   status: UserStatus;
+  loginType: number;
+  account: { [key: string]: any };
+  token: string;
+  profile: { [key: string]: any };
+  bindings: { [key: string]: any }[];
 };
 
 export enum UserStatus {
@@ -22,7 +27,11 @@ export type UserAction = UpdateUserAction;
 
 export type UserDispatch = Dispatch<UserAction>;
 
-export type UserStore = Store<User, UserAction>;
+export type State = {
+  user: User;
+};
+
+export type Store = Store<State, UserAction>;
 // export type counterStateType = {
 //   counter: number;
 // };

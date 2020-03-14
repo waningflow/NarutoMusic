@@ -1,3 +1,5 @@
+import { mockApi } from '@/utils/utils';
+import { loginRes } from './mock';
 import axios from './request';
 
 /**
@@ -7,9 +9,19 @@ interface LoginWithCellphoneIn {
   phone: string;
   password: string;
 }
-export function loginWithCellphone(params: LoginWithCellphoneIn) {
-  // console.log(params);
-  return axios.get('/login/cellphone', { params });
+interface LoginWithCellphoneRes {
+  code: number;
+  loginType: number;
+  account: { [key: string]: any };
+  token: string;
+  profile: { [key: string]: any };
+  bindings: { [key: string]: any }[];
+}
+export function loginWithCellphone(
+  params: LoginWithCellphoneIn
+): Promise<LoginWithCellphoneRes> {
+  // return axios.get('/login/cellphone', { params });
+  return mockApi(loginRes);
 }
 
 /**

@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { InputGroup, Input, Icon, Button } from 'rsuite';
 import './ProfileBar.less';
+import { url } from 'inspector';
 import Dialog from '../../shared/Dialog';
 import { login } from '../../actions/user';
-import { userStateType } from '../../reducers/types';
+import { State as StateType, UserStatus, User } from '../../reducers/types';
 
 interface Props {
-  loginStatus: string;
+  loginStatus: UserStatus;
+  userInfo: User;
   loginApi: (params: any) => Promise<any>;
 }
 
@@ -55,7 +57,12 @@ class ProfileBar extends Component<Props, State> {
 
   render() {
     const { showLoginModal, phone, password } = this.state;
-    const { loginStatus } = this.props;
+    const { loginStatus, userInfo } = this.props;
+    const avatarStyle: { [key: string]: string } = {};
+    const profile = userInfo.profile || {};
+    if (profile.avatarUrl) {
+      avatarStyle.backgroundImage = `url(${userInfo.profile.avatarUrl})`;
+    }
     return (
       <div className="profilebar">
         <div
@@ -65,6 +72,7 @@ class ProfileBar extends Component<Props, State> {
           role="button"
           tabIndex={0}
           aria-label="xx"
+          style={avatarStyle}
         />
         <div
           className="profilebar_msg"
@@ -73,7 +81,7 @@ class ProfileBar extends Component<Props, State> {
           role="button"
           tabIndex={0}
         >
-          {loginStatus}
+          {profile.nickname || loginStatus}
         </div>
         <Dialog
           show={showLoginModal}
@@ -108,7 +116,7 @@ class ProfileBar extends Component<Props, State> {
                 appearance="primary"
                 className="login_confirm_btn"
                 onClick={this.handleClickLogin}
-                loading={loginStatus === 'loging'}
+                loading={loginStatus === UserStatus.LOGGING}
               >
                 登录
               </Button>
@@ -120,9 +128,10 @@ class ProfileBar extends Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: userStateType) => {
+const mapStateToProps = (state: StateType) => {
   return {
-    loginStatus: state.user.status
+    loginStatus: state.user.status,
+    userInfo: state.user
   };
 };
 
