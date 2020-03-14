@@ -1,0 +1,10 @@
+.container {
+  height: 100%;
+  text-align: center;
+}
+
+.container h2 {
+  margin-top: 100px;
+  font-size: 50px;
+  color: #eeeeee;
+}
