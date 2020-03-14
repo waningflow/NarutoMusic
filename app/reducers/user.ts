@@ -1,14 +1,13 @@
-import { Action } from 'redux';
-import { LOGIN_STATUS_UPDATE } from '../actions/user';
+import { UserStatus, UPDATE_USER, UserAction } from './types';
 
 const initState = {
-  status: 'unloged'
+  status: UserStatus.UNLOG
 };
 
-export default function user(state = initState, action: Action<string>) {
+export default function user(state = initState, action: UserAction) {
   switch (action.type) {
-    case LOGIN_STATUS_UPDATE:
-      return { ...state, status: action.value };
+    case UPDATE_USER:
+      return { ...state, ...action.payload };
     default:
       return state;
   }

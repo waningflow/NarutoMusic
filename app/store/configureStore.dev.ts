@@ -4,8 +4,8 @@ import { createHashHistory } from 'history';
 import { routerMiddleware, routerActions } from 'connected-react-router';
 import { createLogger } from 'redux-logger';
 import createRootReducer from '../reducers';
-import * as counterActions from '../actions/counter';
-import { counterStateType } from '../reducers/types';
+import * as userAction from '../actions/user';
+import { User } from '../reducers/types';
 
 declare global {
   interface Window {
@@ -25,7 +25,7 @@ const history = createHashHistory();
 
 const rootReducer = createRootReducer(history);
 
-const configureStore = (initialState?: counterStateType) => {
+const configureStore = (initialState?: User) => {
   // Redux Configuration
   const middleware = [];
   const enhancers = [];
@@ -50,7 +50,7 @@ const configureStore = (initialState?: counterStateType) => {
 
   // Redux DevTools Configuration
   const actionCreators = {
-    ...counterActions,
+    ...userAction,
     ...routerActions
   };
   // If Redux DevTools Extension is installed use it, otherwise use Redux compose

@@ -2,8 +2,6 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import routes from './constants/routes.json';
 import App from './containers/App';
-// import HomePage from './containers/HomePage';
-// import CounterPage from './containers/CounterPage';
 
 import Home from './components/Home';
 import Header from './containers/Header';

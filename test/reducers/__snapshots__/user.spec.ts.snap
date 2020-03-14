@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`reducers user should handle LOGIN_STATUS_UPDATE 1`] = `
+Object {
+  "status": "logging",
+}
+`;
+
+exports[`reducers user should handle initial state 1`] = `
+Object {
+  "status": "not-logged",
+}
+`;
