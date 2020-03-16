@@ -1,3 +1,5 @@
 {
-  "HOME": "/"
+  "HOME": "/",
+  "MUSIC_SHEET": "/music_sheet",
+  "MUSIC_PLAY": "/music_play"
 }

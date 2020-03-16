@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { InputGroup, Input, Icon, Button } from 'rsuite';
 import './ProfileBar.less';
-import { url } from 'inspector';
 import Dialog from '../../shared/Dialog';
 import { login } from '../../actions/user';
 import { State as StateType, UserStatus, User } from '../../reducers/types';
