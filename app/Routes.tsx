@@ -21,7 +21,7 @@ export default function Routes() {
           <Content>
             <Switch>
               <Route path={routes.HOME} exact component={Home} />
-              <Route path={routes.MUSIC_SHEET} exact component={MusicSheet} />
+              <Route path={routes.MUSIC_SHEET} component={MusicSheet} />
               <Route path={routes.MUSIC_PLAY} exact component={MusicPlay} />
             </Switch>
           </Content>

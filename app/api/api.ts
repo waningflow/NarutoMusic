@@ -1,5 +1,6 @@
+import { pick } from 'lodash';
 import { mockApi } from '@/utils/utils';
-import { loginRes } from './mock';
+import { loginRes, recommendSonsRes } from './mock';
 import axios from './request';
 
 /**
@@ -86,4 +87,19 @@ export function playlistDetail(id: string) {
  */
 export function songUrl(id: string) {
   return axios.get('/song/url', { params: { id } });
+}
+
+interface RecommendSongsAPIRes {
+  code: number;
+  recommend: any[];
+  data: any;
+}
+// 获取推荐歌曲
+export async function recommendSongs() {
+  // return axios.get('/recommend/songs');
+  const res = await mockApi(recommendSonsRes);
+  const result = res.recommend.map(v =>
+    pick(v, ['name', 'id', 'artists', 'album', 'hMusic'])
+  );
+  return result;
 }

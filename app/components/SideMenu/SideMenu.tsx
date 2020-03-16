@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Nav, Icon } from 'rsuite';
 import './SideMenu.less';
@@ -23,18 +23,21 @@ const menuList: MenuItem[] = [
   {
     key: 'DAILY_RECOMMENDED',
     label: '每日推荐',
-    href: '/music_sheet'
+    href: '/music_sheet?type=daily_recommended'
   }
 ];
 
 const SideMenu = () => {
   const history = useHistory();
-  const [activeKey, setActiveKey] = useState(menuList[0].key);
+  const [activeKey, setActiveKey] = useState('');
+  // history.push(menuList[0].href);
   const handleSelect = (key: string) => {
+    if (key === activeKey) return;
     setActiveKey(key);
     const item: MenuItem = menuList.find(v => v.key === key) || menuList[0];
     history.push(item.href);
   };
+  if (!activeKey) handleSelect(menuList[0].key);
   return (
     <div className="side-menu-container">
       <Nav vertical activeKey={activeKey} onSelect={handleSelect} style={{}}>
