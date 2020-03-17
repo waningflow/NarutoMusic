@@ -10,6 +10,15 @@ function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
+const MusicSheetTitle = () => {
+  return (
+    <div className="music-sheet-title-container">
+      <div className="music-sheet-title">每日歌曲推荐</div>
+      <div className="music-sheet-subtitle">根据你的音乐口味生成</div>
+    </div>
+  );
+};
+
 const MusicSheet = () => {
   const query = useQuery();
   const type = query.get('type');
@@ -27,25 +36,31 @@ const MusicSheet = () => {
   }, [type]);
   return (
     <div className="music-sheet-container">
+      <MusicSheetTitle />
       <Table
         autoHeight
         data={songList}
-        rowHeight={36}
+        rowHeight={34}
         onRowClick={data => {
           console.log(data);
         }}
+        hover={false}
       >
         <Column width={60} align="center" fixed>
           <HeaderCell />
           <Cell>
-            {(rowData: any, rowIndex: number) => (
+            {(_: any, rowIndex: number) => (
               <span className="music-sheet-table-index">{rowIndex + 1}</span>
             )}
           </Cell>
         </Column>
         <Column flexGrow={5} align="left" fixed>
           <HeaderCell>音乐标题</HeaderCell>
-          <Cell dataKey="name" />
+          <Cell>
+            {(rowData: any) => (
+              <span className="music-sheet-table-name">{rowData.name}</span>
+            )}
+          </Cell>
         </Column>
         <Column flexGrow={2} align="left" fixed>
           <HeaderCell>歌手</HeaderCell>
@@ -67,7 +82,7 @@ const MusicSheet = () => {
             )}
           </Cell>
         </Column>
-        <Column flexGrow={1} align="left" fixed>
+        <Column flexGrow={1.25} align="left" fixed>
           <HeaderCell>时长</HeaderCell>
           <Cell>
             {(rowData: any) => (

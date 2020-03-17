@@ -97,7 +97,7 @@ interface RecommendSongsAPIRes {
 // 获取推荐歌曲
 export async function recommendSongs() {
   // return axios.get('/recommend/songs');
-  const res = await mockApi(recommendSonsRes);
+  const res = await mockApi(recommendSonsRes, 10);
   const result = res.recommend.map(v =>
     pick(v, ['name', 'id', 'artists', 'album', 'hMusic'])
   );
