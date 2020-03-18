@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Table } from 'rsuite';
+import { Table, Button, Icon } from 'rsuite';
 import { recommendSongs } from '@/api/api';
 import './MusicSheet.less';
 
@@ -15,6 +15,10 @@ const MusicSheetTitle = () => {
     <div className="music-sheet-title-container">
       <div className="music-sheet-title">每日歌曲推荐</div>
       <div className="music-sheet-subtitle">根据你的音乐口味生成</div>
+      <Button appearance="primary" size="sm" block>
+        <Icon icon="play-circle-o" />
+        播放全部
+      </Button>
     </div>
   );
 };
