@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { parseTime } from '@/utils/utils';
 import './PlayingBar.less';
 
 const url =
@@ -16,6 +17,7 @@ const PlayingBar = () => {
 
   useEffect(() => {
     const refresh = () => {
+      console.log('rr');
       if (audioNode) setCurrentTime(parseInt(audioNode.currentTime, 10));
       refreshTime = setTimeout(refresh, refreshInterval);
     };
@@ -24,7 +26,7 @@ const PlayingBar = () => {
       if (refreshTime) clearTimeout(refreshTime);
       refreshTime = null;
     };
-  }, []);
+  }, [paused]);
 
   const handleClickPlay = () => {
     if (paused) {
@@ -43,26 +45,29 @@ const PlayingBar = () => {
           audioNode = node;
         }}
       />
-      <div>{currentTime}</div>
-      <div
-        role="button"
-        tabIndex={0}
-        className="playing-bar-play-btn"
-        onClick={handleClickPlay}
-        onKeyUp={e => {
-          // 监听空格，后续改成全局快捷键
-          if (e.keyCode === 32) handleClickPlay();
-        }}
-      >
-        {paused ? (
-          <div className="playing-bar-play-triangle" />
-        ) : (
-          <div className="playing-bar-play-doublelines">
-            <div className="playing-bar-play-line" />
-            <div className="playing-bar-play-line" />
-          </div>
-        )}
+      <div className="playing-bar-chip">{parseTime(currentTime)}</div>
+      <div className="playing-bar-center-control">
+        <div
+          role="button"
+          tabIndex={0}
+          className="playing-bar-play-btn"
+          onClick={handleClickPlay}
+          onKeyUp={e => {
+            // 监听空格，后续改成全局快捷键
+            if (e.keyCode === 32) handleClickPlay();
+          }}
+        >
+          {paused ? (
+            <div className="playing-bar-play-triangle" />
+          ) : (
+            <div className="playing-bar-play-doublelines">
+              <div className="playing-bar-play-line" />
+              <div className="playing-bar-play-line" />
+            </div>
+          )}
+        </div>
       </div>
+      <div className="playing-bar-right-control" />
     </div>
   );
 };

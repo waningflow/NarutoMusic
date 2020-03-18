@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Table, Button, Icon } from 'rsuite';
 import { recommendSongs } from '@/api/api';
+import { parseTime, num2str } from '@/utils/utils';
 import './MusicSheet.less';
 
 const { Column, HeaderCell, Cell } = Table;
@@ -54,7 +55,9 @@ const MusicSheet = () => {
           <HeaderCell />
           <Cell>
             {(_: any, rowIndex: number) => (
-              <span className="music-sheet-table-index">{rowIndex + 1}</span>
+              <span className="music-sheet-table-index">
+                {rowIndex + 1 >= 100 ? rowIndex + 1 : num2str(rowIndex + 1)}
+              </span>
             )}
           </Cell>
         </Column>
@@ -91,7 +94,7 @@ const MusicSheet = () => {
           <Cell>
             {(rowData: any) => (
               <span className="music-sheet-table-playtime">
-                {rowData.hMusic.playTime}
+                {parseTime(rowData.hMusic.playTime / 1000)}
               </span>
             )}
           </Cell>
