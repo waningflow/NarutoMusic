@@ -5,6 +5,7 @@ import { routerMiddleware, routerActions } from 'connected-react-router';
 import { createLogger } from 'redux-logger';
 import createRootReducer from '../reducers';
 import * as userAction from '../actions/user';
+import * as playlistAction from '../actions/playlist';
 import { State } from '../reducers/types';
 
 declare global {
@@ -51,6 +52,7 @@ const configureStore = (initialState?: State) => {
   // Redux DevTools Configuration
   const actionCreators = {
     ...userAction,
+    ...playlistAction,
     ...routerActions
   };
   // If Redux DevTools Extension is installed use it, otherwise use Redux compose

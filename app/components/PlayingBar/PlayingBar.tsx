@@ -1,27 +1,49 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { parseTime } from '@/utils/utils';
+import { updatePlaylist } from '@/actions/playlist';
 import './PlayingBar.less';
-
-const url =
-  'http://m8.music.126.net/20200317232513/f62433e4551bc31b2655f06bcae08cc9/ymusic/f221/cac7/0f95/3c15e709c8f2595b01edc5f32c214f42.mp3';
 
 const refreshInterval = 500;
 
 let audioNode: any = null;
 let refreshTime: any = null;
 
+let musicInfo = {};
+
 const PlayingBar = () => {
-  const [currentTime, setCurrentTime] = useState(0);
   // const [volume, setVolumn] = useState(50);
-  const [paused, setPaused] = useState(true);
+
+  const dispatch = useDispatch();
+  const { paused, currentTime, playing, list, reset } = useSelector(
+    state => state.playlist
+  );
+  musicInfo = playing || {};
+
+  if (reset === 1 && audioNode) {
+    setTimeout(() => {
+      audioNode.play();
+      dispatch(updatePlaylist({ paused: false }));
+    });
+  }
 
   useEffect(() => {
     const refresh = () => {
-      console.log('rr');
-      if (audioNode) setCurrentTime(parseInt(audioNode.currentTime, 10));
+      if (audioNode) {
+        dispatch(
+          updatePlaylist({ currentTime: parseInt(audioNode.currentTime, 10) })
+        );
+        if (audioNode.paused) {
+          dispatch(updatePlaylist({ paused: true }));
+        }
+      }
       refreshTime = setTimeout(refresh, refreshInterval);
     };
-    refresh();
+    if (paused) {
+      if (refreshTime) clearTimeout(refreshTime);
+    } else {
+      refresh();
+    }
     return () => {
       if (refreshTime) clearTimeout(refreshTime);
       refreshTime = null;
@@ -29,18 +51,19 @@ const PlayingBar = () => {
   }, [paused]);
 
   const handleClickPlay = () => {
+    if (!musicInfo || !musicInfo.url) return;
     if (paused) {
       audioNode.play();
     } else {
       audioNode.pause();
     }
-    setPaused(!paused);
+    dispatch(updatePlaylist({ paused: !paused }));
   };
 
   return (
     <div className="playing-bar-container">
       <audio
-        src={url}
+        src={musicInfo.url || ''}
         ref={node => {
           audioNode = node;
         }}

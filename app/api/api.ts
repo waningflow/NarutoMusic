@@ -85,19 +85,24 @@ export function playlistDetail(id: string) {
 /**
  * 获取歌单详情。音乐 id，多个用逗号间隔
  */
-export function songUrl(id: string) {
-  return axios.get('/song/url', { params: { id } });
+export async function songUrl(id: string) {
+  const res = await axios.get('/song/url', { params: { id } });
+  const result: { [key: string]: any } = {};
+  res.data.data.forEach((v: { id: string; url: string }) => {
+    result[v.id] = v.url;
+  });
+  return result;
 }
 
+// 获取推荐歌曲
 interface RecommendSongsAPIRes {
   code: number;
   recommend: any[];
   data: any;
 }
-// 获取推荐歌曲
 export async function recommendSongs() {
   // return axios.get('/recommend/songs');
-  const res = await mockApi(recommendSonsRes, 10);
+  const res = (await mockApi(recommendSonsRes, 10)) as RecommendSongsAPIRes;
   const result = res.recommend.map(v =>
     pick(v, ['name', 'id', 'artists', 'album', 'hMusic'])
   );

@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { Table, Button, Icon } from 'rsuite';
-import { recommendSongs } from '@/api/api';
+import { recommendSongs, songUrl } from '@/api/api';
 import { parseTime, num2str } from '@/utils/utils';
+import { updatePlaylist } from '@/actions/playlist';
+import { getSongUrls, getSongUrls2 } from '@/utils/ls';
 import './MusicSheet.less';
 
 const { Column, HeaderCell, Cell } = Table;
@@ -11,12 +14,13 @@ function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
-const MusicSheetTitle = () => {
+const MusicSheetTitle = (props: { onClickPlayAll: () => void }) => {
+  const { onClickPlayAll } = props;
   return (
     <div className="music-sheet-title-container">
       <div className="music-sheet-title">每日歌曲推荐</div>
       <div className="music-sheet-subtitle">根据你的音乐口味生成</div>
-      <Button appearance="primary" size="sm" block>
+      <Button appearance="primary" size="sm" block onClick={onClickPlayAll}>
         <Icon icon="play-circle-o" />
         播放全部
       </Button>
@@ -27,6 +31,7 @@ const MusicSheetTitle = () => {
 const MusicSheet = () => {
   const query = useQuery();
   const type = query.get('type');
+  const dispatch = useDispatch();
 
   const [songList, setSongList] = useState<any[]>([]);
   useEffect(() => {
@@ -39,9 +44,27 @@ const MusicSheet = () => {
       }
     })();
   }, [type]);
+
+  const handlePlayAll = async () => {
+    const ids = songList.map(v => v.id).join(',');
+    const urls = await getSongUrls2(ids);
+    const list = songList.map(v => {
+      return {
+        ...v,
+        url: urls[v.id] || ''
+      };
+    });
+    dispatch(
+      updatePlaylist({
+        list,
+        playing: list[0],
+        reset: 1
+      })
+    );
+  };
   return (
     <div className="music-sheet-container">
-      <MusicSheetTitle />
+      <MusicSheetTitle onClickPlayAll={handlePlayAll} />
       <Table
         autoHeight
         data={songList}
