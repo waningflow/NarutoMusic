@@ -68,7 +68,33 @@ const PlayingBar = () => {
           audioNode = node;
         }}
       />
-      <div className="playing-bar-chip">{parseTime(currentTime)}</div>
+      <div className="playing-bar-chip">
+        <div
+          className="playing-bar-chip-pic"
+          style={{
+            backgroundImage: `url(${
+              musicInfo.album ? musicInfo.album.picUrl : ''
+            })`
+          }}
+        />
+        <div className="playing-bar-text">
+          <div className="playing-bar-text-name">
+            {musicInfo.name || ''}
+            {musicInfo.artists && (
+              <span>{musicInfo.artists.map(v => v.name).join('/')}</span>
+            )}
+          </div>
+          <div className="playing-bar-text-time">
+            {parseTime(currentTime)}
+            {musicInfo.hMusic && (
+              <span>
+                <span style={{ margin: '0 4px' }}>/</span>
+                {parseTime(musicInfo.hMusic.playTime / 1000)}
+              </span>
+            )}
+          </div>
+        </div>
+      </div>
       <div className="playing-bar-center-control">
         <div
           role="button"
