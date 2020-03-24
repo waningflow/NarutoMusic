@@ -36,6 +36,7 @@ type MusicInfo = {
 };
 
 export type Playlist = {
+  playingIndex: number;
   playing: MusicInfo;
   list: MusicInfo[];
   paused: boolean;

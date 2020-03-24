@@ -58,6 +58,7 @@ const MusicSheet = () => {
       updatePlaylist({
         list,
         playing: list[0],
+        playingIndex: 0,
         reset: 1
       })
     );

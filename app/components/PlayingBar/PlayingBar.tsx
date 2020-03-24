@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import cn from 'classnames';
 import { parseTime } from '@/utils/utils';
 import { updatePlaylist } from '@/actions/playlist';
 import './PlayingBar.less';
@@ -15,9 +16,14 @@ const PlayingBar = () => {
   // const [volume, setVolumn] = useState(50);
 
   const dispatch = useDispatch();
-  const { paused, currentTime, playing, list, reset } = useSelector(
-    state => state.playlist
-  );
+  const {
+    paused,
+    currentTime,
+    playing,
+    list,
+    reset,
+    playingIndex
+  } = useSelector(state => state.playlist);
   musicInfo = playing || {};
 
   if (reset === 1 && audioNode) {
@@ -60,6 +66,14 @@ const PlayingBar = () => {
     dispatch(updatePlaylist({ paused: !paused }));
   };
 
+  const handleClickSwitch = (direction: number) => {
+    const nIndex = playingIndex + direction;
+    if (!list[nIndex]) return;
+    dispatch(
+      updatePlaylist({ playing: list[nIndex], playingIndex: nIndex, reset: 1 })
+    );
+  };
+
   return (
     <div className="playing-bar-container">
       <audio
@@ -99,6 +113,17 @@ const PlayingBar = () => {
         <div
           role="button"
           tabIndex={0}
+          className={cn('playing-bar-triangle', 'playing-bar-pre-btn', {
+            'playing-bar-btn-disable': !list[playingIndex - 1]
+          })}
+          onClick={() => handleClickSwitch(-1)}
+          onKeyUp={() => {}}
+        >
+          <div className="playing-bar-line" />
+        </div>
+        <div
+          role="button"
+          tabIndex={0}
           className="playing-bar-play-btn"
           onClick={handleClickPlay}
           onKeyUp={e => {
@@ -107,13 +132,24 @@ const PlayingBar = () => {
           }}
         >
           {paused ? (
-            <div className="playing-bar-play-triangle" />
+            <div className="playing-bar-triangle" />
           ) : (
             <div className="playing-bar-play-doublelines">
               <div className="playing-bar-play-line" />
               <div className="playing-bar-play-line" />
             </div>
           )}
+        </div>
+        <div
+          role="button"
+          tabIndex={0}
+          className={cn('playing-bar-triangle', 'playing-bar-next-btn', {
+            'playing-bar-btn-disable': !list[playingIndex + 1]
+          })}
+          onClick={() => handleClickSwitch(1)}
+          onKeyUp={() => {}}
+        >
+          <div className="playing-bar-line" />
         </div>
       </div>
       <div className="playing-bar-right-control" />

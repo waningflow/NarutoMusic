@@ -4,6 +4,18 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  .playing-bar-triangle {
+    position: relative;
+    left: 8px;
+    margin: 0;
+    width: 0px;
+    height: 0px;
+    border-left: 12.1px solid @N00;
+    border-top: 7px solid transparent;
+    border-right: 12.1px solid transparent;
+    border-bottom: 7px solid transparent;
+    outline: none;
+  }
   .playing-bar-chip {
     flex: 1;
     height: 40px;
@@ -40,7 +52,11 @@
     }
   }
   .playing-bar-center-control {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     .playing-bar-play-btn {
+      margin: 0 15px;
       width: 40px;
       height: 40px;
       border-radius: 20px;
@@ -50,17 +66,6 @@
       align-items: center;
       cursor: pointer;
       outline: none;
-      .playing-bar-play-triangle {
-        position: relative;
-        left: 8px;
-        margin: 0 auto;
-        width: 0px;
-        height: 0px;
-        border-left: 12.1px solid @N00;
-        border-top: 7px solid transparent;
-        border-right: 12.1px solid transparent;
-        border-bottom: 7px solid transparent;
-      }
       .playing-bar-play-doublelines {
         width: 9px;
         display: flex;
@@ -73,6 +78,33 @@
           border-radius: 1px;
         }
       }
+    }
+    .playing-bar-line {
+      width: 1px;
+      height: 14px;
+      background-color: @H600;
+      top: -7px;
+      position: relative;
+    }
+    .playing-bar-next-btn {
+      border-left-color: @H600;
+      cursor: pointer;
+      .playing-bar-line {
+        left: 2px;
+      }
+    }
+    .playing-bar-pre-btn {
+      border-left-color: transparent;
+      border-right-color: @H600;
+      left: -8px;
+      cursor: pointer;
+      .playing-bar-line {
+        right: 2px;
+      }
+    }
+    .playing-bar-btn-disable{
+      opacity: 0.6;
+      cursor: initial;
     }
   }
   .playing-bar-right-control {

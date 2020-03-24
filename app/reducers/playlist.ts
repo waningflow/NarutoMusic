@@ -1,6 +1,7 @@
 import { UPDATE_PLAYLIST, PlaylistAction } from './types';
 
 const initState = {
+  playingIndex: -1,
   playing: {},
   list: [],
   paused: true,
