@@ -18,7 +18,8 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     'import/prefer-default-export': 'off',
     'jsx-a11y/media-has-caption': 'off',
-    'jsx-a11y/control-has-associated-label': 'off'
+    'jsx-a11y/control-has-associated-label': 'off',
+    'react/jsx-curly-newline': 'off'
   },
   settings: {
     'import/resolver': {

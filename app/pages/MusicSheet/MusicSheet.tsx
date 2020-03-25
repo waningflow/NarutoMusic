@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Table, Button, Icon } from 'rsuite';
+import cn from 'classnames';
 import { recommendSongs, songUrl } from '@/api/api';
 import { parseTime, num2str } from '@/utils/utils';
 import { updatePlaylist } from '@/actions/playlist';
@@ -32,7 +33,7 @@ const MusicSheet = () => {
   const query = useQuery();
   const type = query.get('type');
   const dispatch = useDispatch();
-
+  const { playing } = useSelector(state => state.playlist);
   const [songList, setSongList] = useState<any[]>([]);
   useEffect(() => {
     (async function update() {
@@ -78,18 +79,28 @@ const MusicSheet = () => {
         <Column width={60} align="center" fixed>
           <HeaderCell />
           <Cell>
-            {(_: any, rowIndex: number) => (
-              <span className="music-sheet-table-index">
-                {rowIndex + 1 >= 100 ? rowIndex + 1 : num2str(rowIndex + 1)}
-              </span>
-            )}
+            {(rowData: any, rowIndex: number) =>
+              rowData.id === playing.id ? (
+                <Icon icon="volume-up" className="primary-color" />
+              ) : (
+                <span className="music-sheet-table-index">
+                  {rowIndex + 1 >= 100 ? rowIndex + 1 : num2str(rowIndex + 1)}
+                </span>
+              )
+            }
           </Cell>
         </Column>
         <Column flexGrow={5} align="left" fixed>
           <HeaderCell>音乐标题</HeaderCell>
           <Cell>
             {(rowData: any) => (
-              <span className="music-sheet-table-name">{rowData.name}</span>
+              <span
+                className={cn('music-sheet-table-name', {
+                  'primary-color': rowData.id === playing.id
+                })}
+              >
+                {rowData.name}
+              </span>
             )}
           </Cell>
         </Column>

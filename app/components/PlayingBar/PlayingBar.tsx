@@ -132,12 +132,12 @@ const PlayingBar = () => {
             )}
           </div>
           <div className="playing-bar-text-time">
-            {parseTime(currentTime)}
             {musicInfo.hMusic && (
-              <span>
+              <>
+                {parseTime(currentTime)}
                 <span style={{ margin: '0 4px' }}>/</span>
                 {parseTime(musicInfo.hMusic.playTime / 1000)}
-              </span>
+              </>
             )}
           </div>
         </div>
