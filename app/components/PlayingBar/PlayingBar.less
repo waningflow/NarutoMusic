@@ -4,6 +4,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
   .playing-bar-triangle {
     position: relative;
     left: 8px;
@@ -15,6 +16,39 @@
     border-right: 12.1px solid transparent;
     border-bottom: 7px solid transparent;
     outline: none;
+  }
+  .playing-bar-stepline {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 2px;
+    width: 100%;
+    background-color: @N100;
+    .playing-bar-stepline-progress {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 2px;
+      background-color: @H600;
+    }
+    .rs-slider-handle {
+      display: none;
+      &::before {
+        background-color: @H600;
+      }
+    }
+    .rs-slider-bar {
+      border-radius: 0;
+      background-color: transparent;
+      top: -2px;
+      .rs-slider-progress-bar {
+        border-radius: 0;
+        background-color: transparent;
+      }
+    }
+    .rs-slider:hover .rs-slider-handle {
+      display: block;
+    }
   }
   .playing-bar-chip {
     flex: 1;
@@ -37,8 +71,13 @@
       display: flex;
       flex-direction: column;
       justify-content: space-around;
+      flex: 1;
       .playing-bar-text-name {
         color: @N800;
+        max-width: 95%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
         span {
           color: @N600;
           margin-left: 10px;
@@ -102,7 +141,7 @@
         right: 2px;
       }
     }
-    .playing-bar-btn-disable{
+    .playing-bar-btn-disable {
       opacity: 0.6;
       cursor: initial;
     }

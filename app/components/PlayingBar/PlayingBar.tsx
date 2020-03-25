@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Slider } from 'rsuite';
 import cn from 'classnames';
 import { parseTime } from '@/utils/utils';
 import { updatePlaylist } from '@/actions/playlist';
@@ -74,6 +75,20 @@ const PlayingBar = () => {
     );
   };
 
+  const hanldeChangeProgress = value => {
+    const cTime = (value * musicInfo.hMusic.playTime) / 100000;
+    dispatch(
+      updatePlaylist({
+        currentTime: cTime
+      })
+    );
+    if (audioNode) audioNode.currentTime = cTime;
+  };
+
+  const playProgress = musicInfo.hMusic
+    ? Number(((currentTime * 100000) / musicInfo.hMusic.playTime).toFixed(1))
+    : 0;
+
   return (
     <div className="playing-bar-container">
       <audio
@@ -82,6 +97,24 @@ const PlayingBar = () => {
           audioNode = node;
         }}
       />
+      <div className="playing-bar-stepline">
+        {musicInfo.hMusic && (
+          <>
+            <div
+              className="playing-bar-stepline-progress"
+              style={{
+                width: `${playProgress}%`
+              }}
+            />
+            <Slider
+              progress
+              value={playProgress}
+              tooltip={false}
+              onChange={hanldeChangeProgress}
+            />
+          </>
+        )}
+      </div>
       <div className="playing-bar-chip">
         <div
           className="playing-bar-chip-pic"
