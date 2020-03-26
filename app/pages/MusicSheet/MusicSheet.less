@@ -42,6 +42,13 @@
   .music-sheet-table-index {
     color: @N400;
   }
+  .music-sheet-table-name-more {
+    visibility: hidden;
+    position: relative;
+    top: 3px;
+    color: @N500;
+    margin-left: 5px;
+  }
   .music-sheet-table-name {
     color: @N800;
   }
@@ -71,7 +78,17 @@
         .rs-table-cell {
           background-color: @N200;
         }
+        .music-sheet-table-name-more {
+          visibility: visible;
+          &:hover {
+            color: @N700;
+          }
+        }
       }
+    }
+    .rs-table-cell-content {
+      padding: 0;
+      line-height: 34px;
     }
   }
   .primary-color {

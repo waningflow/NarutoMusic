@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { Table, Button, Icon } from 'rsuite';
+import { Table, Button, Icon, Dropdown, Popover, Whisper } from 'rsuite';
 import cn from 'classnames';
 import { recommendSongs, songUrl } from '@/api/api';
 import { parseTime, num2str } from '@/utils/utils';
@@ -64,6 +64,27 @@ const MusicSheet = () => {
       })
     );
   };
+
+  const handleClickMusicPlay = async rowData => {
+    const { id } = rowData;
+    const index = songList.findIndex(v => v.id === id);
+    const ids = songList.map(v => v.id).join(',');
+    const urls = await getSongUrls2(ids);
+    const list = songList.map(v => {
+      return {
+        ...v,
+        url: urls[v.id] || ''
+      };
+    });
+    dispatch(
+      updatePlaylist({
+        list,
+        playing: list[index],
+        playingIndex: index,
+        reset: 1
+      })
+    );
+  };
   return (
     <div className="music-sheet-container">
       <MusicSheetTitle onClickPlayAll={handlePlayAll} />
@@ -100,6 +121,29 @@ const MusicSheet = () => {
                 })}
               >
                 {rowData.name}
+                <Whisper
+                  placement="rightStart"
+                  trigger="click"
+                  full
+                  speaker={
+                    <Popover full style={{ width: '100px' }}>
+                      <Dropdown.Menu>
+                        <Dropdown.Item
+                          onClick={() => handleClickMusicPlay(rowData)}
+                        >
+                          播放
+                        </Dropdown.Item>
+                        <Dropdown.Item>下一首播放</Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Popover>
+                  }
+                >
+                  <Icon
+                    icon="more"
+                    size="lg"
+                    className="music-sheet-table-name-more"
+                  />
+                </Whisper>
               </span>
             )}
           </Cell>

@@ -31,23 +31,27 @@
       height: 2px;
       background-color: @H600;
     }
-    .rs-slider-handle {
-      display: none;
-      &::before {
-        background-color: @H600;
-      }
-    }
-    .rs-slider-bar {
-      border-radius: 0;
-      background-color: transparent;
+    .rs-slider {
       top: -2px;
-      .rs-slider-progress-bar {
+      .rs-slider-handle {
+        display: none;
+        &::before {
+          background-color: @H600;
+        }
+      }
+      .rs-slider-bar {
         border-radius: 0;
         background-color: transparent;
+        .rs-slider-progress-bar {
+          border-radius: 0;
+          background-color: transparent;
+        }
       }
-    }
-    .rs-slider:hover .rs-slider-handle {
-      display: block;
+      &:hover {
+        .rs-slider-handle {
+          display: block;
+        }
+      }
     }
   }
   .playing-bar-chip {

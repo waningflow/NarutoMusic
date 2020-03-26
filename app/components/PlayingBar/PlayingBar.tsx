@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Slider } from 'rsuite';
+import { Slider, Alert } from 'rsuite';
 import cn from 'classnames';
 import { parseTime } from '@/utils/utils';
 import { updatePlaylist } from '@/actions/playlist';
@@ -12,6 +12,15 @@ let audioNode: any = null;
 let refreshTime: any = null;
 
 let musicInfo = {};
+
+const audioPlay = node => {
+  try {
+    node.play();
+  } catch (e) {
+    console.log(e);
+    Alert.error(e.message);
+  }
+};
 
 const PlayingBar = () => {
   // const [volume, setVolumn] = useState(50);
@@ -29,7 +38,7 @@ const PlayingBar = () => {
 
   if (reset === 1 && audioNode) {
     setTimeout(() => {
-      audioNode.play();
+      audioPlay(audioNode);
       dispatch(updatePlaylist({ paused: false }));
     });
   }
@@ -60,7 +69,7 @@ const PlayingBar = () => {
   const handleClickPlay = () => {
     if (!musicInfo || !musicInfo.url) return;
     if (paused) {
-      audioNode.play();
+      audioPlay(audioNode);
     } else {
       audioNode.pause();
     }
