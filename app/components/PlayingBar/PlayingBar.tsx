@@ -5,7 +5,12 @@ import cn from 'classnames';
 import { parseTime } from '@/utils/utils';
 import { updatePlaylist } from '@/actions/playlist';
 import './PlayingBar.less';
+import { platform } from 'os';
 
+enum Mode {
+  SEQ = 'seq',
+  SINGLE = 'single'
+}
 const refreshInterval = 500;
 
 let audioNode: any = null;
@@ -24,6 +29,7 @@ const audioPlay = node => {
 
 const PlayingBar = () => {
   // const [volume, setVolumn] = useState(50);
+  const [playmode, setPlaymode] = useState(Mode.SEQ);
 
   const dispatch = useDispatch();
   const {
@@ -43,6 +49,13 @@ const PlayingBar = () => {
     });
   }
 
+  const playFrom = (index: number) => {
+    if (!list[index]) return;
+    dispatch(
+      updatePlaylist({ playing: list[index], playingIndex: index, reset: 1 })
+    );
+  };
+
   useEffect(() => {
     const refresh = () => {
       if (audioNode) {
@@ -51,6 +64,15 @@ const PlayingBar = () => {
         );
         if (audioNode.paused) {
           dispatch(updatePlaylist({ paused: true }));
+          switch (playmode) {
+            case Mode.SEQ:
+              playFrom(playingIndex + 1);
+              break;
+            case Mode.SINGLE:
+              playFrom(playingIndex);
+              break;
+            default:
+          }
         }
       }
       refreshTime = setTimeout(refresh, refreshInterval);
