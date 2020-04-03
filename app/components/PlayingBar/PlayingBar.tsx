@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Slider, Alert } from 'rsuite';
 import cn from 'classnames';
 import { parseTime } from '@/utils/utils';
 import { updatePlaylist } from '@/actions/playlist';
 import './PlayingBar.less';
-import { platform } from 'os';
 
 enum Mode {
   SEQ = 'seq',
@@ -42,6 +41,8 @@ const PlayingBar = () => {
   } = useSelector(state => state.playlist);
   musicInfo = playing || {};
 
+  const latestPlayingIndex = useRef(playingIndex);
+
   if (reset === 1 && audioNode) {
     setTimeout(() => {
       audioPlay(audioNode);
@@ -50,11 +51,21 @@ const PlayingBar = () => {
   }
 
   const playFrom = (index: number) => {
+    console.log('playFrom', index);
     if (!list[index]) return;
     dispatch(
       updatePlaylist({ playing: list[index], playingIndex: index, reset: 1 })
     );
   };
+
+  const playFromCount = (index = 0) => {
+    console.log('latestPlayingIndex', latestPlayingIndex);
+    playFrom(latestPlayingIndex.current + index);
+  };
+
+  useEffect(() => {
+    latestPlayingIndex.current = playingIndex;
+  }, [playingIndex]);
 
   useEffect(() => {
     const refresh = () => {
@@ -63,15 +74,15 @@ const PlayingBar = () => {
           updatePlaylist({ currentTime: parseInt(audioNode.currentTime, 10) })
         );
         if (audioNode.paused) {
-          dispatch(updatePlaylist({ paused: true }));
           switch (playmode) {
             case Mode.SEQ:
-              playFrom(playingIndex + 1);
+              playFromCount(1);
               break;
             case Mode.SINGLE:
-              playFrom(playingIndex);
+              playFromCount(0);
               break;
             default:
+              dispatch(updatePlaylist({ paused: true }));
           }
         }
       }
@@ -96,14 +107,6 @@ const PlayingBar = () => {
       audioNode.pause();
     }
     dispatch(updatePlaylist({ paused: !paused }));
-  };
-
-  const handleClickSwitch = (direction: number) => {
-    const nIndex = playingIndex + direction;
-    if (!list[nIndex]) return;
-    dispatch(
-      updatePlaylist({ playing: list[nIndex], playingIndex: nIndex, reset: 1 })
-    );
   };
 
   const hanldeChangeProgress = value => {
@@ -180,7 +183,7 @@ const PlayingBar = () => {
           className={cn('playing-bar-triangle', 'playing-bar-pre-btn', {
             'playing-bar-btn-disable': !list[playingIndex - 1]
           })}
-          onClick={() => handleClickSwitch(-1)}
+          onClick={() => playFromCount(-1)}
           onKeyUp={() => {}}
         >
           <div className="playing-bar-line" />
@@ -210,7 +213,7 @@ const PlayingBar = () => {
           className={cn('playing-bar-triangle', 'playing-bar-next-btn', {
             'playing-bar-btn-disable': !list[playingIndex + 1]
           })}
-          onClick={() => handleClickSwitch(1)}
+          onClick={() => playFromCount(1)}
           onKeyUp={() => {}}
         >
           <div className="playing-bar-line" />
