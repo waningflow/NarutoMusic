@@ -5,6 +5,8 @@ import cn from 'classnames';
 import { parseTime } from '@/utils/utils';
 import Logger from '@/utils/logger';
 import { updatePlaylist } from '@/actions/playlist';
+import { Music } from '@/types';
+import { State as StateType } from '@/reducers';
 import './PlayingBar.less';
 
 const log = new Logger('PlayingBar');
@@ -16,7 +18,7 @@ enum Mode {
 
 let audioNode: any = null;
 
-let musicInfo = {};
+let musicInfo: Music = {};
 
 const audioPlay = async (node: any) => {
   try {
@@ -35,7 +37,7 @@ const PlayingBar = () => {
 
   const dispatch = useDispatch();
   const { paused, playing, list, reset, playingIndex } = useSelector(
-    state => state.playlist
+    (state: StateType) => state.playlist
   );
   musicInfo = playing || {};
 
@@ -71,24 +73,33 @@ const PlayingBar = () => {
   };
 
   const playFromCount = (index = 0) => {
-    log.info('latestPlayingIndex', latestPlayingIndex);
+    log.info('latestPlayingIndex', JSON.stringify(latestPlayingIndex));
     playFrom(latestPlayingIndex.current + index);
   };
 
   useEffect(() => {
-    audioNode.addEventListener('timeupdate', () => {
+    const handleTimeUpdate = () => {
       log.info('audioNode: timeupdate');
-      setCurrentTime(parseInt(audioNode.currentTime, 10));
-    });
-    audioNode.addEventListener('play', () => {
+      if (audioNode) setCurrentTime(parseInt(audioNode.currentTime, 10));
+    };
+    const handlePlaying = () => {
+      log.info('audioNode: playing');
+    };
+    const handlePlay = () => {
       log.info('audioNode: play');
       dispatch(updatePlaylist({ paused: false }));
-    });
-    audioNode.addEventListener('pause', () => {
+    };
+    const handlePause = () => {
       log.info('audioNode: paused');
       dispatch(updatePlaylist({ paused: true }));
-    });
-    audioNode.addEventListener('ended', () => {
+    };
+    const handleWaiting = () => {
+      log.info('audioNode: waiting');
+    };
+    const handleVolumnChange = () => {
+      log.info('audioNode: volumechange');
+    };
+    const handleEnded = () => {
       log.info('audioNode: ended');
       switch (playmode) {
         case Mode.SEQ:
@@ -99,7 +110,23 @@ const PlayingBar = () => {
           break;
         default:
       }
-    });
+    };
+    audioNode.addEventListener('timeupdate', handleTimeUpdate);
+    audioNode.addEventListener('playing', handlePlaying);
+    audioNode.addEventListener('play', handlePlay);
+    audioNode.addEventListener('pause', handlePause);
+    audioNode.addEventListener('waiting', handleWaiting);
+    audioNode.addEventListener('volumechange', handleVolumnChange);
+    audioNode.addEventListener('ended', handleEnded);
+    return () => {
+      audioNode.removeEventListener('timeupdate', handleTimeUpdate);
+      audioNode.removeEventListener('playing', handlePlaying);
+      audioNode.removeEventListener('play', handlePlay);
+      audioNode.removeEventListener('pause', handlePause);
+      audioNode.removeEventListener('waiting', handleWaiting);
+      audioNode.removeEventListener('volumechange', handleVolumnChange);
+      audioNode.removeEventListener('ended', handleEnded);
+    };
   }, []);
 
   const handleClickPlay = () => {
@@ -111,7 +138,8 @@ const PlayingBar = () => {
     }
   };
 
-  const hanldeChangeProgress = value => {
+  const hanldeChangeProgress = (value: number) => {
+    if (!musicInfo || !musicInfo.hMusic) return;
     const cTime = (value * musicInfo.hMusic.playTime) / 100000;
     if (audioNode) audioNode.currentTime = cTime;
   };

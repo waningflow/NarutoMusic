@@ -1,13 +1,11 @@
-import {
-  UPDATE_USER,
-  UserStatus,
-  UserAction,
-  UserDispatch
-} from '../reducers/types';
-
+import { UserStatus, User } from '@/types';
+import Logger from '@/utils/logger';
+import { UPDATE_USER, UserAction, UserDispatch } from '@/store/types';
 import { loginWithCellphone } from '../api';
 
-function updateUserStatus(status: UserStatus): UserAction {
+const log = new Logger('Action User');
+
+function updateUserStatus(status: UserStatus) {
   return {
     type: UPDATE_USER,
     payload: {
@@ -16,7 +14,7 @@ function updateUserStatus(status: UserStatus): UserAction {
   };
 }
 
-function updateUser(user: any): UserAction {
+function updateUser(user: Partial<User>) {
   return {
     type: UPDATE_USER,
     payload: user
@@ -32,7 +30,7 @@ function login(params: any) {
       delete res.code;
       dispatch(updateUser({ status: UserStatus.LOGGED, ...res }));
     } catch (e) {
-      console.log(e);
+      log.err(e);
       dispatch(updateUserStatus(UserStatus.UNLOG));
     }
   };

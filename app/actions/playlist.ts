@@ -1,6 +1,6 @@
-import { UPDATE_PLAYLIST, PlaylistAction } from '../reducers/types';
+import { UPDATE_PLAYLIST } from '@/store/types';
 
-function updatePlaylist(playlist: any): PlaylistAction {
+function updatePlaylist(playlist: any) {
   return {
     type: UPDATE_PLAYLIST,
     payload: playlist

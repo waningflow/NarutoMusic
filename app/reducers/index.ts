@@ -1,13 +1,15 @@
-import { combineReducers } from 'redux';
-import { connectRouter } from 'connected-react-router';
-import { History } from 'history';
+import { combineReducers, Store as ReduxStore, Action } from 'redux';
+import router from './history';
 import user from './user';
 import playlist from './playlist';
 
-export default function createRootReducer(history: History) {
-  return combineReducers({
-    router: connectRouter(history),
-    user,
-    playlist
-  });
-}
+const rootReducer = combineReducers({
+  router,
+  user,
+  playlist
+});
+export default rootReducer;
+
+export type State = ReturnType<typeof rootReducer>;
+
+export type Store = ReduxStore<State, Action<string>>;

@@ -1,12 +1,13 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import { createHashHistory } from 'history';
+// import { createHashHistory } from 'history';
+import { history } from '@/reducers/history';
 import { routerMiddleware, routerActions } from 'connected-react-router';
-import { createLogger } from 'redux-logger';
-import createRootReducer from '../reducers';
-import * as userAction from '../actions/user';
-import * as playlistAction from '../actions/playlist';
-import { State } from '../reducers/types';
+import rootReducer from '@/reducers';
+// import { createLogger } from 'redux-logger';
+// import createRootReducer from '../reducers';
+import * as userAction from '@/actions/user';
+import * as playlistAction from '@/actions/playlist';
 
 declare global {
   interface Window {
@@ -22,9 +23,9 @@ declare global {
   }
 }
 
-const history = createHashHistory();
+// const rootReducer = createRootReducer();
 
-const rootReducer = createRootReducer(history);
+type State = ReturnType<typeof rootReducer>;
 
 const configureStore = (initialState?: State) => {
   // Redux Configuration

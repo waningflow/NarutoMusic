@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { InputGroup, Input, Icon, Button } from 'rsuite';
+import { UserStatus, User } from '@/types';
+import Dialog from '@/shared/Dialog';
+import { login } from '@/actions/user';
+import { State as StateType } from '@/reducers';
 import './ProfileBar.less';
-import Dialog from '../../shared/Dialog';
-import { login } from '../../actions/user';
-import { State as StateType, UserStatus, User } from '../../reducers/types';
 
 interface Props {
   loginStatus: UserStatus;

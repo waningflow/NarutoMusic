@@ -7,7 +7,12 @@ import { recommendSongs, songUrl } from '@/api/api';
 import { parseTime, num2str } from '@/utils/utils';
 import { updatePlaylist } from '@/actions/playlist';
 import { getSongUrls, getSongUrls2 } from '@/utils/ls';
+import { Music } from '@/types';
+import { State as StateType } from '@/reducers';
+import Logger from '@/utils/logger';
 import './MusicSheet.less';
+
+const log = new Logger('MusicSheet');
 
 const { Column, HeaderCell, Cell } = Table;
 
@@ -33,7 +38,7 @@ const MusicSheet = () => {
   const query = useQuery();
   const type = query.get('type');
   const dispatch = useDispatch();
-  const { playing } = useSelector(state => state.playlist);
+  const { playing } = useSelector((state: StateType) => state.playlist);
   const [songList, setSongList] = useState<any[]>([]);
   useEffect(() => {
     (async function update() {
@@ -65,7 +70,7 @@ const MusicSheet = () => {
     );
   };
 
-  const handleClickMusicPlay = async rowData => {
+  const handleClickMusicPlay = async (rowData: Music) => {
     const { id } = rowData;
     const index = songList.findIndex(v => v.id === id);
     const ids = songList.map(v => v.id).join(',');
@@ -93,7 +98,7 @@ const MusicSheet = () => {
         data={songList}
         rowHeight={34}
         onRowClick={data => {
-          console.log(data);
+          log.info(data);
         }}
         hover={false}
       >
@@ -151,9 +156,9 @@ const MusicSheet = () => {
         <Column flexGrow={2} align="left" fixed>
           <HeaderCell>歌手</HeaderCell>
           <Cell>
-            {(rowData: any) => (
+            {(rowData: Music) => (
               <span className="music-sheet-table-artist">
-                {rowData.artists.map(v => v.name).join('/')}
+                {rowData.artists && rowData.artists.map(v => v.name).join('/')}
               </span>
             )}
           </Cell>
@@ -161,9 +166,9 @@ const MusicSheet = () => {
         <Column flexGrow={3} align="left" fixed>
           <HeaderCell>专辑</HeaderCell>
           <Cell>
-            {(rowData: any) => (
+            {(rowData: Music) => (
               <span className="music-sheet-table-album">
-                {rowData.album.name}
+                {rowData.album && rowData.album.name}
               </span>
             )}
           </Cell>
@@ -171,9 +176,9 @@ const MusicSheet = () => {
         <Column flexGrow={1.25} align="left" fixed>
           <HeaderCell>时长</HeaderCell>
           <Cell>
-            {(rowData: any) => (
+            {(rowData: Music) => (
               <span className="music-sheet-table-playtime">
-                {parseTime(rowData.hMusic.playTime / 1000)}
+                {rowData.hMusic && parseTime(rowData.hMusic.playTime / 1000)}
               </span>
             )}
           </Cell>

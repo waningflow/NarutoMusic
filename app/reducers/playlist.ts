@@ -1,6 +1,7 @@
-import { UPDATE_PLAYLIST, PlaylistAction } from './types';
+import { Playlist } from '@/types';
+import { UPDATE_PLAYLIST, PlaylistAction } from '@/store/types';
 
-const initState = {
+const initState: Playlist = {
   playingIndex: -1,
   playing: {},
   list: [],
@@ -8,7 +9,10 @@ const initState = {
   reset: 0
 };
 
-export default function playlist(state = initState, action: PlaylistAction) {
+export default function playlist(
+  state = initState,
+  action: PlaylistAction
+): Playlist {
   switch (action.type) {
     case UPDATE_PLAYLIST: {
       const reset = action.payload.reset || state.reset + 1;
