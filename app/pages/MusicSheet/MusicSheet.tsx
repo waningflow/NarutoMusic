@@ -3,16 +3,14 @@ import { useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Table, Button, Icon, Dropdown, Popover, Whisper } from 'rsuite';
 import cn from 'classnames';
-import { recommendSongs, songUrl } from '@/api/api';
+// import { recommendSongs, songUrl } from '@/api/api';
 import { parseTime, num2str } from '@/utils/utils';
 import { updatePlaylist } from '@/actions/playlist';
 import { getSongUrls, getSongUrls2 } from '@/utils/ls';
 import { Music } from '@/types';
 import { State as StateType } from '@/reducers';
-import Logger from '@/utils/logger';
+import { log, getRecommendSongs } from './service';
 import './MusicSheet.less';
-
-const log = new Logger('MusicSheet');
 
 const { Column, HeaderCell, Cell } = Table;
 
@@ -43,10 +41,10 @@ const MusicSheet = () => {
   useEffect(() => {
     (async function update() {
       try {
-        const songs = await recommendSongs();
-        setSongList(songs);
+        const songs = await getRecommendSongs();
+        if (songs) setSongList(songs);
       } catch (e) {
-        //
+        log.err('get recommend songs err');
       }
     })();
   }, [type]);
@@ -94,15 +92,7 @@ const MusicSheet = () => {
   return (
     <div className="music-sheet-container">
       <MusicSheetTitle onClickPlayAll={handlePlayAll} />
-      <Table
-        autoHeight
-        data={songList}
-        rowHeight={34}
-        onRowClick={data => {
-          log.info(data);
-        }}
-        hover={false}
-      >
+      <Table autoHeight data={songList} rowHeight={34} hover={false}>
         <Column width={60} align="center" fixed>
           <HeaderCell />
           <Cell>

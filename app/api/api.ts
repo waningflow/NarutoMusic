@@ -1,6 +1,6 @@
 import { pick } from 'lodash';
-import { mockApi } from '@/utils/utils';
-import { loginRes, recommendSonsRes } from './mock';
+// import { mockApi } from '@/utils/utils';
+// import { loginRes, recommendSonsRes } from './mock';
 import axios from './request';
 
 /**
@@ -21,8 +21,8 @@ interface LoginWithCellphoneRes {
 export function loginWithCellphone(
   params: LoginWithCellphoneIn
 ): Promise<LoginWithCellphoneRes> {
-  // return axios.get('/login/cellphone', { params });
-  return mockApi(loginRes);
+  return axios.get('/login/cellphone', { params });
+  // return mockApi(loginRes);
 }
 
 /**
@@ -101,8 +101,8 @@ interface RecommendSongsAPIRes {
   data: any;
 }
 export async function recommendSongs() {
-  // return axios.get('/recommend/songs');
-  const res = (await mockApi(recommendSonsRes, 10)) as RecommendSongsAPIRes;
+  const res = (await axios.get('/recommend/songs')) as RecommendSongsAPIRes;
+  // const res = (await mockApi(recommendSonsRes, 10)) as RecommendSongsAPIRes;
   const result = res.recommend.map(v =>
     pick(v, ['name', 'id', 'artists', 'album', 'hMusic'])
   );

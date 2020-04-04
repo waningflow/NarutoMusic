@@ -53,7 +53,7 @@ const PlayingBar = () => {
     if (reset === 1 && audioNode) {
       setTimeout(() => {
         audioPlay(audioNode);
-      });
+      }, 150);
     }
   }, [reset]);
 
