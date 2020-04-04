@@ -21,11 +21,11 @@ class Logger {
   }
 
   info(...msg: any[]) {
-    console.log(this.formatMsg(msg));
+    console.log(`[${this.module}]`, ...msg);
   }
 
   err(...msg: any[]) {
-    console.error(this.formatMsg(msg));
+    console.error(`[${this.module}]`, ...msg);
   }
 }
 

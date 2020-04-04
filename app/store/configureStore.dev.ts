@@ -1,11 +1,9 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-// import { createHashHistory } from 'history';
 import { history } from '@/reducers/history';
 import { routerMiddleware, routerActions } from 'connected-react-router';
 import rootReducer from '@/reducers';
 // import { createLogger } from 'redux-logger';
-// import createRootReducer from '../reducers';
 import * as userAction from '@/actions/user';
 import * as playlistAction from '@/actions/playlist';
 
@@ -22,8 +20,6 @@ declare global {
     };
   }
 }
-
-// const rootReducer = createRootReducer();
 
 type State = ReturnType<typeof rootReducer>;
 

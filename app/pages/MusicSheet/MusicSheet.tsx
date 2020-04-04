@@ -52,6 +52,7 @@ const MusicSheet = () => {
   }, [type]);
 
   const handlePlayAll = async () => {
+    if (!songList || !songList.length) return;
     const ids = songList.map(v => v.id).join(',');
     const urls = await getSongUrls2(ids);
     const list = songList.map(v => {

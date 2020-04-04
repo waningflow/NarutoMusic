@@ -13,6 +13,7 @@ import { app, BrowserWindow } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
+import mainInit from './mainProcess';
 
 export default class AppUpdater {
   constructor() {
@@ -85,6 +86,8 @@ const createWindow = async () => {
       mainWindow.show();
       mainWindow.focus();
     }
+
+    mainInit(mainWindow);
   });
 
   mainWindow.on('closed', () => {

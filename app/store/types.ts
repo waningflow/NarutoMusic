@@ -1,4 +1,4 @@
-// 定义：type, payload, action, dispatch
+// 定义：action, dispatch
 import { Dispatch } from 'redux';
 import { User, Playlist } from '@/types';
 

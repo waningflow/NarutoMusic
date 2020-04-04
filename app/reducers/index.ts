@@ -11,5 +11,3 @@ const rootReducer = combineReducers({
 export default rootReducer;
 
 export type State = ReturnType<typeof rootReducer>;
-
-export type Store = ReduxStore<State, Action<string>>;
