@@ -5,7 +5,6 @@ const initState = {
   playing: {},
   list: [],
   paused: true,
-  currentTime: 0,
   reset: 0
 };
 

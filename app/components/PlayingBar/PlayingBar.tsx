@@ -3,25 +3,27 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Slider, Alert } from 'rsuite';
 import cn from 'classnames';
 import { parseTime } from '@/utils/utils';
+import Logger from '@/utils/logger';
 import { updatePlaylist } from '@/actions/playlist';
 import './PlayingBar.less';
+
+const log = new Logger('PlayingBar');
 
 enum Mode {
   SEQ = 'seq',
   SINGLE = 'single'
 }
-const refreshInterval = 500;
 
 let audioNode: any = null;
-let refreshTime: any = null;
 
 let musicInfo = {};
 
-const audioPlay = node => {
+const audioPlay = async (node: any) => {
   try {
-    node.play();
+    log.info('start to play');
+    await node.play();
   } catch (e) {
-    console.log(e);
+    log.err(e);
     Alert.error(e.message);
   }
 };
@@ -29,75 +31,76 @@ const audioPlay = node => {
 const PlayingBar = () => {
   // const [volume, setVolumn] = useState(50);
   const [playmode, setPlaymode] = useState(Mode.SEQ);
+  const [currentTime, setCurrentTime] = useState(0);
 
   const dispatch = useDispatch();
-  const {
-    paused,
-    currentTime,
-    playing,
-    list,
-    reset,
-    playingIndex
-  } = useSelector(state => state.playlist);
+  const { paused, playing, list, reset, playingIndex } = useSelector(
+    state => state.playlist
+  );
   musicInfo = playing || {};
 
   const latestPlayingIndex = useRef(playingIndex);
+  const latestList = useRef(list);
 
-  if (reset === 1 && audioNode) {
-    setTimeout(() => {
-      audioPlay(audioNode);
-      dispatch(updatePlaylist({ paused: false }));
-    });
-  }
+  useEffect(() => {
+    latestPlayingIndex.current = playingIndex;
+    latestList.current = list;
+  }, [playingIndex, list]);
+
+  useEffect(() => {
+    if (reset === 1 && audioNode) {
+      setTimeout(() => {
+        audioPlay(audioNode);
+      });
+    }
+  }, [reset]);
 
   const playFrom = (index: number) => {
-    console.log('playFrom', index);
-    if (!list[index]) return;
+    log.info('play from', index);
+    if (!latestList.current[index]) {
+      log.info('no music to play');
+      return;
+    }
     dispatch(
-      updatePlaylist({ playing: list[index], playingIndex: index, reset: 1 })
+      updatePlaylist({
+        playing: latestList.current[index],
+        playingIndex: index,
+        reset: 1
+      })
     );
   };
 
   const playFromCount = (index = 0) => {
-    console.log('latestPlayingIndex', latestPlayingIndex);
+    log.info('latestPlayingIndex', latestPlayingIndex);
     playFrom(latestPlayingIndex.current + index);
   };
 
   useEffect(() => {
-    latestPlayingIndex.current = playingIndex;
-  }, [playingIndex]);
-
-  useEffect(() => {
-    const refresh = () => {
-      if (audioNode) {
-        dispatch(
-          updatePlaylist({ currentTime: parseInt(audioNode.currentTime, 10) })
-        );
-        if (audioNode.paused) {
-          switch (playmode) {
-            case Mode.SEQ:
-              playFromCount(1);
-              break;
-            case Mode.SINGLE:
-              playFromCount(0);
-              break;
-            default:
-              dispatch(updatePlaylist({ paused: true }));
-          }
-        }
+    audioNode.addEventListener('timeupdate', () => {
+      log.info('audioNode: timeupdate');
+      setCurrentTime(parseInt(audioNode.currentTime, 10));
+    });
+    audioNode.addEventListener('play', () => {
+      log.info('audioNode: play');
+      dispatch(updatePlaylist({ paused: false }));
+    });
+    audioNode.addEventListener('pause', () => {
+      log.info('audioNode: paused');
+      dispatch(updatePlaylist({ paused: true }));
+    });
+    audioNode.addEventListener('ended', () => {
+      log.info('audioNode: ended');
+      switch (playmode) {
+        case Mode.SEQ:
+          playFromCount(1);
+          break;
+        case Mode.SINGLE:
+          playFromCount(0);
+          break;
+        default:
       }
-      refreshTime = setTimeout(refresh, refreshInterval);
-    };
-    if (paused) {
-      if (refreshTime) clearTimeout(refreshTime);
-    } else {
-      refresh();
-    }
-    return () => {
-      if (refreshTime) clearTimeout(refreshTime);
-      refreshTime = null;
-    };
-  }, [paused]);
+    });
+  }, []);
 
   const handleClickPlay = () => {
     if (!musicInfo || !musicInfo.url) return;
@@ -106,16 +109,10 @@ const PlayingBar = () => {
     } else {
       audioNode.pause();
     }
-    dispatch(updatePlaylist({ paused: !paused }));
   };
 
   const hanldeChangeProgress = value => {
     const cTime = (value * musicInfo.hMusic.playTime) / 100000;
-    dispatch(
-      updatePlaylist({
-        currentTime: cTime
-      })
-    );
     if (audioNode) audioNode.currentTime = cTime;
   };
 

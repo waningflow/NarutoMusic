@@ -40,7 +40,6 @@ export type Playlist = {
   playing: MusicInfo;
   list: MusicInfo[];
   paused: boolean;
-  currentTime: number;
   reset: number;
 };
 
