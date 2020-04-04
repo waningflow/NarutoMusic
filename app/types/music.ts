@@ -21,6 +21,9 @@ type Music = {
   name?: string;
   url?: string;
   hMusic?: MusicMeta;
+  mMusic?: MusicMeta;
+  lMusic?: MusicMeta;
+  bMusic?: MusicMeta;
   album?: Album;
   artists?: Artist[];
 };
