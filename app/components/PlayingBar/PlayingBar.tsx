@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Slider, Alert } from 'rsuite';
+import { Slider, Alert, Whisper, Tooltip } from 'rsuite';
 import cn from 'classnames';
-import { parseTime } from '@/utils/utils';
+import { parseTime, findNext } from '@/utils/utils';
 import Logger from '@/utils/logger';
 import { updatePlaylist } from '@/actions/playlist';
 import { Music } from '@/types';
@@ -11,10 +11,10 @@ import './PlayingBar.less';
 
 const log = new Logger('PlayingBar');
 
-enum Mode {
-  SEQ = 'seq',
-  SINGLE = 'single'
-}
+const modeMap = {
+  LOOP: 'loop',
+  SINGLE: 'single'
+};
 
 let audioNode: any = null;
 
@@ -32,7 +32,7 @@ const audioPlay = async (node: any) => {
 
 const PlayingBar = () => {
   // const [volume, setVolumn] = useState(50);
-  const [playmode, setPlaymode] = useState(Mode.SEQ);
+  const [playmode, setPlaymode] = useState(modeMap.SINGLE);
   const [currentTime, setCurrentTime] = useState(0);
 
   const dispatch = useDispatch();
@@ -43,11 +43,13 @@ const PlayingBar = () => {
 
   const latestPlayingIndex = useRef(playingIndex);
   const latestList = useRef(list);
+  const latestPlaymode = useRef(playmode);
 
   useEffect(() => {
     latestPlayingIndex.current = playingIndex;
     latestList.current = list;
-  }, [playingIndex, list]);
+    latestPlaymode.current = playmode;
+  }, [playingIndex, list, playmode]);
 
   useEffect(() => {
     if (reset === 1 && audioNode) {
@@ -57,24 +59,25 @@ const PlayingBar = () => {
     }
   }, [reset]);
 
-  const playFrom = (index: number) => {
+  const playFrom = (index: number, trystart?: boolean) => {
     log.info('play from', index);
-    if (!latestList.current[index]) {
+    const nIndex = latestList.current[index] || !trystart ? index : 0;
+    if (!latestList.current[nIndex]) {
       log.info('no music to play');
       return;
     }
     dispatch(
       updatePlaylist({
-        playing: latestList.current[index],
-        playingIndex: index,
+        playing: latestList.current[nIndex],
+        playingIndex: nIndex,
         reset: 1
       })
     );
   };
 
-  const playFromCount = (index = 0) => {
+  const playFromCount = (index = 0, trystart?: boolean) => {
     log.info('latestPlayingIndex', JSON.stringify(latestPlayingIndex));
-    playFrom(latestPlayingIndex.current + index);
+    playFrom(latestPlayingIndex.current + index, trystart);
   };
 
   useEffect(() => {
@@ -101,11 +104,11 @@ const PlayingBar = () => {
     };
     const handleEnded = () => {
       log.info('audioNode: ended');
-      switch (playmode) {
-        case Mode.SEQ:
-          playFromCount(1);
+      switch (latestPlaymode.current) {
+        case modeMap.LOOP:
+          playFromCount(1, true);
           break;
-        case Mode.SINGLE:
+        case modeMap.SINGLE:
           playFromCount(0);
           break;
         default:
@@ -136,6 +139,11 @@ const PlayingBar = () => {
     } else {
       audioNode.pause();
     }
+  };
+
+  const handleClickPlayMode = () => {
+    const nextMode = findNext(Object.values(modeMap), playmode);
+    if (nextMode) setPlaymode(nextMode);
   };
 
   const hanldeChangeProgress = (value: number) => {
@@ -244,7 +252,34 @@ const PlayingBar = () => {
           <div className="playing-bar-line" />
         </div>
       </div>
-      <div className="playing-bar-right-control" />
+      <div className="playing-bar-right-control">
+        <div
+          role="button"
+          tabIndex={0}
+          className="playing-bar-play-mode"
+          onClick={handleClickPlayMode}
+          onKeyUp={() => {}}
+        >
+          {playmode === modeMap.LOOP && (
+            <Whisper
+              placement="top"
+              trigger="hover"
+              speaker={<Tooltip>列表循环</Tooltip>}
+            >
+              <i className="iconfont iconxunhuanbofang" />
+            </Whisper>
+          )}
+          {playmode === modeMap.SINGLE && (
+            <Whisper
+              placement="top"
+              trigger="hover"
+              speaker={<Tooltip>单曲循环</Tooltip>}
+            >
+              <i className="iconfont icondanquxunhuan" />
+            </Whisper>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

@@ -56,6 +56,7 @@
   }
   .playing-bar-chip {
     flex: 1;
+    flex-basis: 40%;
     height: 40px;
     padding-left: 10px;
     // padding-top: 9px;
@@ -152,5 +153,14 @@
   }
   .playing-bar-right-control {
     flex: 1;
+    flex-basis: 40%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    padding-right: 30px;
+    color: @N700;
+    .playing-bar-play-mode {
+      outline: none;
+    }
   }
 }

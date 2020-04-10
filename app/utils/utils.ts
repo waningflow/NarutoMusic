@@ -32,4 +32,19 @@ function parseTime(ts = 0) {
   return `${num2str(min)}:${num2str(sec)}`;
 }
 
-export { sleep, deepcopy, mockApi, parseTime, num2str };
+function findNext<T>(
+  list: T[] = [],
+  val: string | number,
+  i = 1,
+  loop = true
+): T | null {
+  const { length } = list;
+  const index = list.indexOf(val);
+  if (index === -1) return list[0];
+  const nIndex = index + i;
+  if (nIndex < length) return list[nIndex];
+  if (loop) return list[0];
+  return null;
+}
+
+export { sleep, deepcopy, mockApi, parseTime, num2str, findNext };
