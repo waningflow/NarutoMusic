@@ -1,38 +1,33 @@
 import { recommendSongs } from '@/api/api';
 import Logger from '@/utils/logger';
+import { lsKey } from '@/constants/const';
+import { lsGet, lsSet } from '@/utils/utils';
+import { storage } from '@/storage';
 
 const log = new Logger('MusicSheet');
 
-const StorageKey = {
-  RecommendSongs: 'N_Recommennd_Songs'
-};
+function storeRecommendSonds(today: string, data: any) {
+  let songs = storage.get(lsKey.RecommendSongs);
+  if (!songs) songs = {};
+  if (songs[today]) return;
+  songs[today] = data;
+  storage.set({ [lsKey.RecommendSongs]: songs });
+}
 
 async function getRecommendSongs() {
   const today = new Date().toJSON().split('T')[0];
-  let result;
-  try {
-    const resStr = localStorage.getItem(StorageKey.RecommendSongs);
-    if (resStr) {
-      const res = JSON.parse(resStr);
-      if (res[today]) {
-        result = res[today];
-      }
-    }
-  } catch (e) {
-    log.err('get recomment songs from localstorage err');
-  }
+  let result = lsGet(lsKey.RecommendSongs, {})[today];
+
   if (!result) {
     try {
       const res = await recommendSongs();
-      localStorage.setItem(
-        StorageKey.RecommendSongs,
-        JSON.stringify({ [today]: res })
-      );
+      lsSet(lsKey.RecommendSongs, { [today]: res });
       result = res;
     } catch (e) {
       log.err('get recomment songs from api err');
     }
   }
+  if (result) storeRecommendSonds(today, result);
   return result;
 }
 

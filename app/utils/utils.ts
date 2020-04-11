@@ -43,7 +43,7 @@ function findNext<T>(
   return null;
 }
 
-function lsGet(key: string, defaultVal = null, isJson = true) {
+function lsGet(key: string, defaultVal: any = null, isJson = true) {
   const resultStr = localStorage.getItem(key);
   if (!resultStr) return defaultVal;
   if (!isJson) return resultStr || defaultVal;
