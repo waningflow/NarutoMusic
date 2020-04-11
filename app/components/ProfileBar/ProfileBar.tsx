@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { InputGroup, Input, Icon, Button } from 'rsuite';
-import { UserStatus, User } from '@/types';
+import { UserStatus, UserInfo } from '@/types';
 import Dialog from '@/shared/Dialog';
 import { login } from '@/actions/user';
 import { State as StateType } from '@/reducers';
@@ -9,7 +9,7 @@ import './ProfileBar.less';
 
 interface Props {
   loginStatus: UserStatus;
-  userInfo: User;
+  userInfo: UserInfo;
   loginApi: (params: any) => Promise<any>;
 }
 
@@ -30,13 +30,15 @@ class ProfileBar extends Component<Props, State> {
     };
   }
 
-  close = () => {
+  closeLoginModal = () => {
     this.setState({
       showLoginModal: false
     });
   };
 
-  open = () => {
+  openLoginModal = () => {
+    const { loginStatus } = this.props;
+    if (loginStatus === UserStatus.LOGGED) return;
     this.setState({
       showLoginModal: true
     });
@@ -52,7 +54,7 @@ class ProfileBar extends Component<Props, State> {
     const { loginApi } = this.props;
     const { phone, password } = this.state;
     await loginApi({ phone, password });
-    this.close();
+    this.closeLoginModal();
   };
 
   render() {
@@ -61,14 +63,14 @@ class ProfileBar extends Component<Props, State> {
     const avatarStyle: { [key: string]: string } = {};
     const profile = userInfo.profile || {};
     if (profile.avatarUrl) {
-      avatarStyle.backgroundImage = `url(${userInfo.profile.avatarUrl})`;
+      avatarStyle.backgroundImage = `url(${profile.avatarUrl})`;
     }
     return (
       <div className="profilebar">
         <div
           className="profilebar_icon"
-          onClick={this.open}
-          onKeyPress={this.open}
+          onClick={this.openLoginModal}
+          onKeyPress={() => {}}
           role="button"
           tabIndex={0}
           aria-label="xx"
@@ -76,8 +78,8 @@ class ProfileBar extends Component<Props, State> {
         />
         <div
           className="profilebar_msg"
-          onClick={this.open}
-          onKeyPress={this.open}
+          onClick={this.openLoginModal}
+          onKeyPress={() => {}}
           role="button"
           tabIndex={0}
         >
@@ -85,7 +87,7 @@ class ProfileBar extends Component<Props, State> {
         </div>
         <Dialog
           show={showLoginModal}
-          onHide={this.close}
+          onHide={this.closeLoginModal}
           modalStyle={{}}
           contentClass="login_dialog"
         >
@@ -131,7 +133,7 @@ class ProfileBar extends Component<Props, State> {
 const mapStateToProps = (state: StateType) => {
   return {
     loginStatus: state.user.status,
-    userInfo: state.user
+    userInfo: state.user.userInfo
   };
 };
 

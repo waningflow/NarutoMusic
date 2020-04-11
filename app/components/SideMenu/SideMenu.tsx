@@ -7,18 +7,21 @@ type MenuItem = {
   key: string;
   label: string;
   href: string;
+  hidden?: boolean;
 };
 
 const menuList: MenuItem[] = [
   {
     key: 'MUSIC_FIND',
     label: '发现音乐',
-    href: '/'
+    href: '/',
+    hidden: true
   },
   {
     key: 'PERSONAL_FM',
     label: '私人FM',
-    href: '/music_play'
+    href: '/music_play',
+    hidden: true
   },
   {
     key: 'DAILY_RECOMMENDED',
@@ -44,12 +47,14 @@ const SideMenu = () => {
         {/* <Nav.Item eventKey="home" icon={<Icon icon="home" />}>
           Home
         </Nav.Item> */}
-        {menuList.map(item => (
-          <Nav.Item eventKey={item.key} key={item.key}>
-            {item.label}
-            {/* <Link to={item.href}>{item.label}</Link> */}
-          </Nav.Item>
-        ))}
+        {menuList
+          .filter(item => !item.hidden)
+          .map(item => (
+            <Nav.Item eventKey={item.key} key={item.key}>
+              {item.label}
+              {/* <Link to={item.href}>{item.label}</Link> */}
+            </Nav.Item>
+          ))}
       </Nav>
     </div>
   );

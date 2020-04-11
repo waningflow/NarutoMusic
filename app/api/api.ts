@@ -1,7 +1,7 @@
 import { pick } from 'lodash';
 // import { mockApi } from '@/utils/utils';
 // import { loginRes, recommendSonsRes } from './mock';
-import { Music } from '@/types';
+import { Music, UserInfo } from '@/types';
 import axios from './request';
 
 /**
@@ -49,8 +49,9 @@ export function loginRefresh() {
  *
  * @return {Object}
  */
-export function loginStatus() {
-  return axios.get('/login/status');
+export async function loginStatus(): Promise<UserInfo> {
+  const res = (await axios.get('/login/status')) as UserInfo;
+  return res;
 }
 
 /**

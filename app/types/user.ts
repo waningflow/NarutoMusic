@@ -4,8 +4,8 @@ enum UserStatus {
   LOGGED = 'logged-in'
 }
 
-type User = {
-  status: UserStatus;
+type UserInfo = {
+  code?: number;
   loginType?: number;
   account?: { [key: string]: any };
   token?: string;
@@ -13,4 +13,9 @@ type User = {
   bindings?: { [key: string]: any }[];
 };
 
-export { UserStatus, User };
+type User = {
+  status: UserStatus;
+  userInfo: UserInfo;
+};
+
+export { UserStatus, UserInfo, User };

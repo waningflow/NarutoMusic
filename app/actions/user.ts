@@ -5,7 +5,7 @@ import { loginWithCellphone } from '../api';
 
 const log = new Logger('Action User');
 
-function updateUserStatus(status: UserStatus) {
+function updateUserStatus(status: UserStatus): UserAction {
   return {
     type: UPDATE_USER,
     payload: {
@@ -14,7 +14,7 @@ function updateUserStatus(status: UserStatus) {
   };
 }
 
-function updateUser(user: Partial<User>) {
+function updateUser(user: Partial<User>): UserAction {
   return {
     type: UPDATE_USER,
     payload: user
@@ -24,11 +24,9 @@ function updateUser(user: Partial<User>) {
 function login(params: any) {
   return async (dispatch: UserDispatch) => {
     dispatch(updateUserStatus(UserStatus.LOGGING));
-    // await sleep(1000);
     try {
       const res = await loginWithCellphone(params);
-      delete res.code;
-      dispatch(updateUser({ status: UserStatus.LOGGED, ...res }));
+      dispatch(updateUser({ status: UserStatus.LOGGED, userInfo: res }));
     } catch (e) {
       log.err(e);
       dispatch(updateUserStatus(UserStatus.UNLOG));
@@ -36,4 +34,4 @@ function login(params: any) {
   };
 }
 
-export { login };
+export { login, updateUser };

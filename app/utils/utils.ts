@@ -6,10 +6,6 @@ function sleep(ms: number) {
   });
 }
 
-function deepcopy(obj = {}) {
-  return JSON.parse(JSON.stringify(obj));
-}
-
 function mockApi(data: any, time = 1500) {
   return new Promise(resolve => {
     setTimeout(() => {
@@ -47,4 +43,31 @@ function findNext<T>(
   return null;
 }
 
-export { sleep, deepcopy, mockApi, parseTime, num2str, findNext };
+function lsGet(key: string, defaultVal = null, isJson = true) {
+  const resultStr = localStorage.getItem(key);
+  if (!resultStr) return defaultVal;
+  if (!isJson) return resultStr || defaultVal;
+  let result;
+  try {
+    result = JSON.parse(resultStr);
+  } catch (e) {
+    result = defaultVal;
+  }
+  return result;
+}
+
+function lsSet(key: string, val: any, isJson = true) {
+  let valStr;
+  if (isJson) {
+    try {
+      valStr = JSON.stringify(val);
+    } catch (e) {
+      valStr = '';
+    }
+  } else {
+    valStr = val;
+  }
+  localStorage.setItem(key, valStr);
+}
+
+export { sleep, mockApi, parseTime, num2str, findNext, lsGet, lsSet };

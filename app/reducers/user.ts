@@ -2,7 +2,8 @@ import { UserStatus, User } from '@/types';
 import { UPDATE_USER, UserAction } from '@/store/types';
 
 const initState: User = {
-  status: UserStatus.UNLOG
+  status: UserStatus.UNLOG,
+  userInfo: {}
 };
 
 export default function user(state = initState, action: UserAction): User {

@@ -1,8 +1,5 @@
 import { songUrl } from '@/api/api';
-
-const lsKey = {
-  SONG_URLS: 'N_Song_Urls'
-};
+import { lsKey } from '@/constants/const';
 
 async function getSongUrls(ids: string) {
   const result: { [key: string]: string } = {};
