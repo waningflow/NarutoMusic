@@ -7,11 +7,17 @@ import { storage } from '@/storage';
 const log = new Logger('MusicSheet');
 
 function storeRecommendSonds(today: string, data: any) {
-  let songs = storage.get(lsKey.RecommendSongs);
-  if (!songs) songs = {};
-  if (songs[today]) return;
-  songs[today] = data;
-  storage.set({ [lsKey.RecommendSongs]: songs });
+  let keys = storage.get(lsKey.HistoryRecommendKeys);
+  if (!keys) {
+    keys = [];
+    storage.set(lsKey.HistoryRecommendKeys, []);
+    storage.set(lsKey.HistoryRecommend, {});
+  }
+  if (keys.indexOf(today) === -1) {
+    keys.unshift(today);
+    storage.set(lsKey.HistoryRecommendKeys, keys);
+    storage.set(`${lsKey.HistoryRecommend}.${today}`, data);
+  }
 }
 
 async function getRecommendSongs() {

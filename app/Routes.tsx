@@ -10,6 +10,7 @@ import Layout from '@/containers/Layout';
 import Home from '@/pages/Home';
 import MusicSheet from '@/pages/MusicSheet';
 import MusicPlay from '@/pages/MusicPlay';
+import HistoryRecommend from '@/pages/HistoryRecommend';
 
 export default function Routes() {
   return (
@@ -23,6 +24,11 @@ export default function Routes() {
               <Route path={routes.HOME} exact component={Home} />
               <Route path={routes.MUSIC_SHEET} component={MusicSheet} />
               <Route path={routes.MUSIC_PLAY} exact component={MusicPlay} />
+              <Route
+                path={routes.HISTORY_RECOMMEND}
+                exact
+                component={HistoryRecommend}
+              />
             </Switch>
           </Content>
         }

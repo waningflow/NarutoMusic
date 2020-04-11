@@ -9,7 +9,7 @@ const log = new Logger('ApiRequest');
 const instance = axios.create({
   baseURL: 'http://waningflow.com:3002',
   withCredentials: true,
-  timeout: 12000
+  timeout: 30000
 });
 
 instance.interceptors.request.use(request => {

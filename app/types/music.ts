@@ -1,13 +1,21 @@
 type MusicMeta = {
   id: number;
   name: string;
+  size: number;
   playTime: number;
+  extension: string;
 };
 
 type Album = {
   id: number;
   name: string;
+  type: string;
+  size: number;
+  picId: number;
   picUrl: string;
+  publishTime: number;
+  company: string;
+  commentThreadId: string;
 };
 
 type Artist = {

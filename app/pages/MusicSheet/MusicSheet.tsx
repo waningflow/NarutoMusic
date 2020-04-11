@@ -22,10 +22,10 @@ const MusicSheetTitle = (props: { onClickPlayAll: () => void }) => {
   const { onClickPlayAll } = props;
   return (
     <div className="music-sheet-title-container">
-      <div className="music-sheet-title">每日歌曲推荐</div>
+      <div className="music-sheet-title">今日歌曲推荐</div>
       <div className="music-sheet-subtitle">根据你的音乐口味生成</div>
       <Button appearance="primary" size="sm" block onClick={onClickPlayAll}>
-        <Icon icon="play-circle-o" />
+        <i className="iconfont iconplay" />
         播放全部
       </Button>
     </div>

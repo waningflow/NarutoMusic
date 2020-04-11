@@ -1,34 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Nav, Icon } from 'rsuite';
+import { MenuItem } from '@/types';
+import { menuList } from '@/constants/const';
 import './SideMenu.less';
-
-type MenuItem = {
-  key: string;
-  label: string;
-  href: string;
-  hidden?: boolean;
-};
-
-const menuList: MenuItem[] = [
-  {
-    key: 'MUSIC_FIND',
-    label: '发现音乐',
-    href: '/',
-    hidden: true
-  },
-  {
-    key: 'PERSONAL_FM',
-    label: '私人FM',
-    href: '/music_play',
-    hidden: true
-  },
-  {
-    key: 'DAILY_RECOMMENDED',
-    label: '每日推荐',
-    href: '/music_sheet?type=daily_recommended'
-  }
-];
 
 const SideMenu = () => {
   const history = useHistory();
