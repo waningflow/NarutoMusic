@@ -3,9 +3,8 @@ import SheetCard from '@/shared/SheetCard';
 import { getHistoryRecommend } from './service';
 import './HistoryRecommend.less';
 
-const list = getHistoryRecommend();
-
 const HistoryRecomment = () => {
+  const list = getHistoryRecommend();
   return (
     <div className="history-recommend-container">
       {list.map(item => (
