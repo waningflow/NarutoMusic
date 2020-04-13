@@ -1,28 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Table, Button, Icon, Dropdown, Popover, Whisper } from 'rsuite';
 import cn from 'classnames';
-// import { recommendSongs, songUrl } from '@/api/api';
-import { parseTime, num2str } from '@/utils/utils';
+import { parseTime, num2str, getToday } from '@/utils/utils';
 import { updatePlaylist } from '@/actions/playlist';
 import { getSongUrls, getSongUrls2 } from '@/utils/ls';
 import { Music } from '@/types';
 import { State as StateType } from '@/reducers';
-import { log, getRecommendSongs } from './service';
+import { log, getRecommendSongs, getHistoryRecommendSongs } from './service';
 import './MusicSheet.less';
 
 const { Column, HeaderCell, Cell } = Table;
 
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
-
-const MusicSheetTitle = (props: { onClickPlayAll: () => void }) => {
-  const { onClickPlayAll } = props;
+const MusicSheetTitle = (props: {
+  onClickPlayAll: () => void;
+  date: string;
+}) => {
+  const { onClickPlayAll, date } = props;
   return (
     <div className="music-sheet-title-container">
-      <div className="music-sheet-title">今日歌曲推荐</div>
+      <div className="music-sheet-title">
+        <span>{date}</span>
+        歌曲推荐
+      </div>
       <div className="music-sheet-subtitle">根据你的音乐口味生成</div>
       <Button appearance="primary" size="sm" block onClick={onClickPlayAll}>
         <i className="iconfont iconplay" />
@@ -33,18 +33,28 @@ const MusicSheetTitle = (props: { onClickPlayAll: () => void }) => {
 };
 
 const MusicSheet = () => {
-  const query = useQuery();
-  const type = query.get('type');
   const dispatch = useDispatch();
   const { playing } = useSelector((state: StateType) => state.playlist);
+  const { location } = useSelector((state: StateType) => state.router);
+  const { query } = location;
+  const { type } = query;
   const [songList, setSongList] = useState<any[]>([]);
+  const [date, setDate] = useState(getToday());
   useEffect(() => {
     (async function update() {
-      try {
-        const songs = await getRecommendSongs();
+      if (type === 'daily_recommended') {
+        setDate(getToday());
+        try {
+          const songs = await getRecommendSongs();
+          if (songs) setSongList(songs);
+        } catch (e) {
+          log.err('get recommend songs err');
+        }
+      } else if (type === 'history_recommend') {
+        const d = query.date;
+        setDate(d.slice(5));
+        const songs = getHistoryRecommendSongs(d);
         if (songs) setSongList(songs);
-      } catch (e) {
-        log.err('get recommend songs err');
       }
     })();
   }, [type]);
@@ -91,7 +101,7 @@ const MusicSheet = () => {
   };
   return (
     <div className="music-sheet-container">
-      <MusicSheetTitle onClickPlayAll={handlePlayAll} />
+      <MusicSheetTitle onClickPlayAll={handlePlayAll} date={date} />
       <Table autoHeight data={songList} rowHeight={34} hover={false}>
         <Column width={60} align="center" fixed>
           <HeaderCell />

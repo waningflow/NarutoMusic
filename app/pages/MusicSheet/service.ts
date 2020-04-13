@@ -37,4 +37,8 @@ async function getRecommendSongs() {
   return result;
 }
 
-export { log, getRecommendSongs };
+function getHistoryRecommendSongs(date: string) {
+  return storage.get(`${lsKey.HistoryRecommend}.${date}`);
+}
+
+export { log, getRecommendSongs, getHistoryRecommendSongs };

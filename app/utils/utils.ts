@@ -70,4 +70,8 @@ function lsSet(key: string, val: any, isJson = true) {
   localStorage.setItem(key, valStr);
 }
 
-export { sleep, mockApi, parseTime, num2str, findNext, lsGet, lsSet };
+function getToday() {
+  return new Date().toJSON().slice(5, 10);
+}
+
+export { sleep, mockApi, parseTime, num2str, findNext, lsGet, lsSet, getToday };
