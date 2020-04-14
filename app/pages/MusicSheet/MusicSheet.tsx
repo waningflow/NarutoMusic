@@ -179,7 +179,7 @@ const MusicSheet = () => {
           <Cell>
             {(rowData: Music) => (
               <span className="music-sheet-table-playtime">
-                {rowData.hMusic && parseTime(rowData.hMusic.playTime / 1000)}
+                {rowData.duration && parseTime(rowData.duration / 1000)}
               </span>
             )}
           </Cell>

@@ -147,13 +147,13 @@ const PlayingBar = () => {
   };
 
   const hanldeChangeProgress = (value: number) => {
-    if (!musicInfo || !musicInfo.hMusic) return;
-    const cTime = (value * musicInfo.hMusic.playTime) / 100000;
+    if (!musicInfo || !musicInfo.duration) return;
+    const cTime = (value * musicInfo.duration) / 100000;
     if (audioNode) audioNode.currentTime = cTime;
   };
 
-  const playProgress = musicInfo.hMusic
-    ? Number(((currentTime * 100000) / musicInfo.hMusic.playTime).toFixed(1))
+  const playProgress = musicInfo.duration
+    ? Number(((currentTime * 100000) / musicInfo.duration).toFixed(1))
     : 0;
 
   return (
@@ -165,7 +165,7 @@ const PlayingBar = () => {
         }}
       />
       <div className="playing-bar-stepline">
-        {musicInfo.hMusic && (
+        {musicInfo.duration && (
           <>
             <div
               className="playing-bar-stepline-progress"
@@ -199,11 +199,11 @@ const PlayingBar = () => {
             )}
           </div>
           <div className="playing-bar-text-time">
-            {musicInfo.hMusic && (
+            {musicInfo.duration && (
               <>
                 {parseTime(currentTime)}
                 <span style={{ margin: '0 4px' }}>/</span>
-                {parseTime(musicInfo.hMusic.playTime / 1000)}
+                {parseTime(musicInfo.duration / 1000)}
               </>
             )}
           </div>

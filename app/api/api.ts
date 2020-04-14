@@ -106,7 +106,7 @@ export async function recommendSongs() {
   const res = (await axios.get('/recommend/songs')) as RecommendSongsAPIRes;
   // const res = (await mockApi(recommendSonsRes, 10)) as RecommendSongsAPIRes;
   const result = res.recommend.map(v => {
-    const item: Music = pick(v, ['name', 'id']);
+    const item: Music = pick(v, ['name', 'id', 'commentThreadId', 'duration']);
     item.artists = v.artists?.map(av => pick(av, ['name', 'id', 'picUrl']));
     item.album = pick(v.album, [
       'name',
@@ -118,13 +118,6 @@ export async function recommendSongs() {
       'publishTime',
       'company',
       'commentThreadId'
-    ]);
-    item.hMusic = pick(v.hMusic || v.mMusic || v.lMusic || v.bMusic, [
-      'name',
-      'id',
-      'size',
-      'playTime',
-      'extension'
     ]);
     return item;
   });

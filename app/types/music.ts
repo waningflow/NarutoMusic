@@ -7,15 +7,15 @@ type MusicMeta = {
 };
 
 type Album = {
-  id: number;
-  name: string;
-  type: string;
-  size: number;
-  picId: number;
-  picUrl: string;
-  publishTime: number;
-  company: string;
-  commentThreadId: string;
+  id?: number;
+  name?: string;
+  type?: string;
+  size?: number;
+  picId?: number;
+  picUrl?: string;
+  publishTime?: number;
+  company?: string;
+  commentThreadId?: string;
 };
 
 type Artist = {
@@ -34,6 +34,8 @@ type Music = {
   bMusic?: MusicMeta;
   album?: Album;
   artists?: Artist[];
+  duration?: number;
+  commentThreadId?: number;
 };
 
 type Playlist = {
