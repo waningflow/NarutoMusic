@@ -21,19 +21,25 @@ function storeRecommendSonds(today: string, data: any) {
 }
 
 async function getRecommendSongs() {
-  const today = new Date().toJSON().split('T')[0];
-  let result = lsGet(lsKey.RecommendSongs, {})[today];
+  const d = new Date();
+  const today = d.toJSON().split('T')[0];
+  const yestoday = new Date(d.getTime() - 86400000).toJSON().split('T')[0];
+  // 每日推荐六点更新，预留15分钟缓冲期，6点15之前的数据视为昨天的，不保存
+  const isAfterSix = d.getHours() >= 6 && d.getMinutes() >= 15;
+  const targetDate = isAfterSix ? today : yestoday;
+  let result = lsGet(lsKey.RecommendSongs, {})[targetDate];
 
   if (!result) {
     try {
       const res = await recommendSongs();
-      lsSet(lsKey.RecommendSongs, { [today]: res });
+      lsSet(lsKey.RecommendSongs, { [targetDate]: res });
       result = res;
     } catch (e) {
       log.err('get recomment songs from api err');
     }
   }
-  if (result) storeRecommendSonds(today, result);
+
+  if (result && isAfterSix) storeRecommendSonds(targetDate, result);
   return result;
 }
 
