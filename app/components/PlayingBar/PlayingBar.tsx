@@ -2,11 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Slider, Alert, Whisper, Tooltip } from 'rsuite';
 import cn from 'classnames';
-import { parseTime, findNext } from '@/utils/utils';
+import { parseTime, findNext, lsGet, lsSet } from '@/utils/utils';
 import Logger from '@/utils/logger';
 import { updatePlaylist } from '@/actions/playlist';
 import { Music } from '@/types';
 import { State as StateType } from '@/reducers';
+import { lsKey } from '@/constants/const';
 import './PlayingBar.less';
 
 const log = new Logger('PlayingBar');
@@ -30,9 +31,11 @@ const audioPlay = async (node: any) => {
   }
 };
 
+const defaultPlayMode = lsGet(lsKey.PlayMode, modeMap.LOOP, false);
+
 const PlayingBar = () => {
   // const [volume, setVolumn] = useState(50);
-  const [playmode, setPlaymode] = useState(modeMap.SINGLE);
+  const [playmode, setPlaymode] = useState(defaultPlayMode);
   const [currentTime, setCurrentTime] = useState(0);
 
   const dispatch = useDispatch();
@@ -143,7 +146,10 @@ const PlayingBar = () => {
 
   const handleClickPlayMode = () => {
     const nextMode = findNext(Object.values(modeMap), playmode);
-    if (nextMode) setPlaymode(nextMode);
+    if (nextMode) {
+      setPlaymode(nextMode);
+      lsSet(lsKey.PlayMode, nextMode, false);
+    }
   };
 
   const hanldeChangeProgress = (value: number) => {

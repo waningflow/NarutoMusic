@@ -10,7 +10,8 @@ const lsKey = {
   USER_INFO: 'N_User_Info',
   RecommendSongs: 'N_Recommennd_Songs',
   HistoryRecommend: 'N_History_Recommend',
-  HistoryRecommendKeys: 'N_History_Recommend_Keys'
+  HistoryRecommendKeys: 'N_History_Recommend_Keys',
+  PlayMode: 'N_Play_Mode'
 };
 
 const menuList: MenuItem[] = [
