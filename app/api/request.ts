@@ -24,12 +24,12 @@ instance.interceptors.response.use(
   },
   err => {
     log.err('HTTP error', err);
-    Alert.error(err.message);
-    if (err.status === 301 && lsGet(lsKey.USER_INFO)) {
+    Alert.error(err.response.body.msg || err.message);
+    if (err.response && err.response.status === 301 && lsGet(lsKey.USER_INFO)) {
       lsSet(lsKey.USER_INFO, null, false);
       window.location.reload();
     }
-    return err;
+    return Promise.reject(err);
   }
 );
 
