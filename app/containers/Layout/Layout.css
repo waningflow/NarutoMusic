@@ -31,10 +31,10 @@
   right: 0;
   display: flex;
 }
-.sidebar{
+.sidebar {
   width: 200px;
+  min-width: 200px;
 }
-.content{
+.content {
   flex-grow: 1;
 }
-
