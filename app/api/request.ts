@@ -8,7 +8,7 @@ const log = new Logger('ApiRequest');
 
 const instance = axios.create({
   // baseURL: 'http://waningflow.com:3002',
-  baseURL: 'http://47.111.190.116:3002/',
+  baseURL: 'http://netapi.waningflow.com',
   withCredentials: true,
   timeout: 30000
 });
