@@ -56,14 +56,14 @@
   }
   .playing-bar-chip {
     flex: 1;
-    flex-basis: 40%;
     height: 40px;
-    padding-left: 10px;
-    // padding-top: 9px;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    overflow: hidden;
     .playing-bar-chip-pic {
+      margin-left: 10px;
+      min-width: 40px;
       width: 40px;
       height: 40px;
       border-radius: 4px;
@@ -77,6 +77,7 @@
       flex-direction: column;
       justify-content: space-around;
       flex: 1;
+      overflow: hidden;
       .playing-bar-text-name {
         color: @N800;
         max-width: 95%;
@@ -153,14 +154,13 @@
   }
   .playing-bar-right-control {
     flex: 1;
-    flex-basis: 40%;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    padding-right: 30px;
     color: @N700;
     .playing-bar-play-mode {
       outline: none;
+      margin-right: 30px;
     }
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "naruto-music",
-  "productName": "NarutoMusic",
-  "version": "0.1.0",
+  "productName": "Naruto Music",
+  "version": "1.0.0-beta1",
   "description": "网易云音乐精简版",
   "scripts": {
     "build": "concurrently \"yarn build-main\" \"yarn build-renderer\"",
@@ -52,8 +52,8 @@
     ]
   },
   "build": {
-    "productName": "ElectronReact",
-    "appId": "org.develar.ElectronReact",
+    "productName": "Naruto Music",
+    "appId": "com.waningflow.NarutoMusic",
     "files": [
       "dist/",
       "node_modules/",
@@ -101,31 +101,11 @@
       "private": false
     }
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/electron-react-boilerplate/electron-react-boilerplate.git"
-  },
   "author": {
-    "name": "Electron React Boilerplate Maintainers",
-    "email": "electronreactboilerplate@gmail.com",
-    "url": "https://electron-react-boilerplate.js.org"
+    "name": "waningflow",
+    "email": "jack1995woods@gmail.com"
   },
-  "contributors": [
-    {
-      "name": "Vikram Rangaraj",
-      "email": "vikr01@icloud.com",
-      "url": "https://github.com/vikr01"
-    },
-    {
-      "name": "Amila Welihinda",
-      "email": "amilajack@gmail.com",
-      "url": "https://github.com/amilajack"
-    }
-  ],
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/electron-react-boilerplate/electron-react-boilerplate/issues"
-  },
   "keywords": [
     "electron",
     "boilerplate",
@@ -138,7 +118,6 @@
     "hot",
     "reload"
   ],
-  "homepage": "https://github.com/electron-react-boilerplate/electron-react-boilerplate#readme",
   "jest": {
     "testURL": "http://localhost/",
     "moduleNameMapper": {
@@ -306,9 +285,6 @@
     "node": ">=7.x",
     "npm": ">=4.x",
     "yarn": ">=0.21.3"
-  },
-  "collective": {
-    "url": "https://opencollective.com/electron-react-boilerplate-594"
   },
   "browserslist": [
     "extends browserslist-config-erb"

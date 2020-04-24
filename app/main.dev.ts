@@ -30,12 +30,12 @@ if (process.env.NODE_ENV === 'production') {
   sourceMapSupport.install();
 }
 
-if (
-  process.env.NODE_ENV === 'development' ||
-  process.env.DEBUG_PROD === 'true'
-) {
-  require('electron-debug')();
-}
+// if (
+//   process.env.NODE_ENV === 'development' ||
+//   process.env.DEBUG_PROD === 'true'
+// ) {
+require('electron-debug')();
+// }
 
 const installExtensions = async () => {
   const installer = require('electron-devtools-installer');
@@ -62,14 +62,9 @@ const createWindow = async () => {
     minWidth: 1000,
     minHeight: 670,
     titleBarStyle: 'hiddenInset',
-    webPreferences:
-      process.env.NODE_ENV === 'development' || process.env.E2E_BUILD === 'true'
-        ? {
-            nodeIntegration: true
-          }
-        : {
-            preload: path.join(__dirname, 'dist/renderer.prod.js')
-          }
+    webPreferences: {
+      nodeIntegration: true
+    }
   });
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);

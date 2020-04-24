@@ -53,7 +53,7 @@ export default class MenuBuilder {
       label: 'Electron',
       submenu: [
         {
-          label: 'About ElectronReact',
+          label: 'About Naruto Music',
           // @ts-ignore
           selector: 'orderFrontStandardAboutPanel:'
         },
@@ -61,7 +61,7 @@ export default class MenuBuilder {
         { label: 'Services', submenu: [] },
         { type: 'separator' },
         {
-          label: 'Hide ElectronReact',
+          label: 'Hide Naruto Music',
           accelerator: 'Command+H',
           selector: 'hide:'
         },
