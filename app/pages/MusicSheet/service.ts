@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { recommendSongs } from '@/api/api';
 import Logger from '@/utils/logger';
 import { lsKey } from '@/constants/const';
@@ -5,6 +6,7 @@ import { lsGet, lsSet } from '@/utils/utils';
 import { storage } from '@/storage';
 
 const log = new Logger('MusicSheet');
+const dateFormat = 'YYYY-MM-DD';
 
 function storeRecommendSonds(today: string, data: any) {
   let keys = storage.get(lsKey.HistoryRecommendKeys);
@@ -21,14 +23,13 @@ function storeRecommendSonds(today: string, data: any) {
 }
 
 async function getRecommendSongs() {
-  const d = new Date();
-  const today = d.toJSON().split('T')[0];
-  const yestoday = new Date(d.getTime() - 86400000).toJSON().split('T')[0];
+  const d = moment.utc().add(8, 'h');
+  const today = d.format(dateFormat);
+  const yestoday = d.add(-1, 'd').format(dateFormat);
   // 每日推荐六点更新，预留15分钟缓冲期，6点15之前的数据视为昨天的，不保存
-  const isAfterSix = d.getHours() >= 6 && d.getMinutes() >= 15;
+  const isAfterSix = d.hour() >= 7 || (d.hour() === 6 && d.minute() >= 15);
   const targetDate = isAfterSix ? today : yestoday;
   let result = lsGet(lsKey.RecommendSongs, {})[targetDate];
-
   if (!result) {
     try {
       const res = await recommendSongs();
