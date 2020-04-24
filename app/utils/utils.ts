@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 function sleep(ms: number) {
   return new Promise(resolve => {
     setTimeout(() => {
@@ -71,7 +73,7 @@ function lsSet(key: string, val: any, isJson = true) {
 }
 
 function getToday() {
-  return new Date().toJSON().slice(5, 10);
+  return moment().format('MM-DD');
 }
 
 export { sleep, mockApi, parseTime, num2str, findNext, lsGet, lsSet, getToday };
