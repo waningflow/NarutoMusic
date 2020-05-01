@@ -4,6 +4,28 @@
   padding-bottom: 30px;
   .music-sheet-title-container {
     padding: 20px;
+    display: flex;
+    flex-direction: row;
+    .music-sheet-title-pic {
+      margin-right: 20px;
+      .music-sheet-title-pic-text {
+        color: @N00;
+        font-size: 30px;
+        font-weight: 600;
+        width: 100%;
+        text-align: center;
+        background-color: @N600;
+        opacity: 0.7;
+        &.is-today {
+          background-color: @H600;
+        }
+      }
+    }
+    .music-sheet-title-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
     .music-sheet-title {
       font-size: 22px;
       font-weight: 800;

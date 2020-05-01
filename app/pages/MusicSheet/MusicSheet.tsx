@@ -7,6 +7,7 @@ import { updatePlaylist } from '@/actions/playlist';
 import { getSongUrls, getSongUrls2 } from '@/utils/ls';
 import { Music } from '@/types';
 import { State as StateType } from '@/reducers';
+import SheetCard from '@/shared/SheetCard';
 import { log, getRecommendSongs, getHistoryRecommendSongs } from './service';
 import './MusicSheet.less';
 
@@ -15,19 +16,33 @@ const { Column, HeaderCell, Cell } = Table;
 const MusicSheetTitle = (props: {
   onClickPlayAll: () => void;
   date: string;
+  picUrl: string;
 }) => {
-  const { onClickPlayAll, date } = props;
+  const { onClickPlayAll, date, picUrl } = props;
   return (
     <div className="music-sheet-title-container">
-      <div className="music-sheet-title">
-        <span>{date}</span>
-        歌曲推荐
+      <div className="music-sheet-title-pic">
+        <SheetCard picUrl={picUrl}>
+          <div
+            className={cn('music-sheet-title-pic-text', {
+              'is-today': date === getToday()
+            })}
+          >
+            {date}
+          </div>
+        </SheetCard>
       </div>
-      <div className="music-sheet-subtitle">根据你的音乐口味生成</div>
-      <Button appearance="primary" size="sm" block onClick={onClickPlayAll}>
-        <i className="iconfont iconplay" />
-        播放全部
-      </Button>
+      <div className="music-sheet-title-content">
+        <div className="music-sheet-title">
+          {/* <span>{date}</span> */}
+          每日歌曲推荐
+        </div>
+        <div className="music-sheet-subtitle">根据你的音乐口味生成</div>
+        <Button appearance="primary" size="sm" block onClick={onClickPlayAll}>
+          <i className="iconfont iconplay" />
+          播放全部
+        </Button>
+      </div>
     </div>
   );
 };
@@ -99,9 +114,14 @@ const MusicSheet = () => {
       })
     );
   };
+  const picUrl = songList ? songList[0]?.album.picUrl : '';
   return (
     <div className="music-sheet-container">
-      <MusicSheetTitle onClickPlayAll={handlePlayAll} date={date} />
+      <MusicSheetTitle
+        onClickPlayAll={handlePlayAll}
+        date={date}
+        picUrl={picUrl}
+      />
       <Table autoHeight data={songList} rowHeight={34} hover={false}>
         <Column width={60} align="center" fixed>
           <HeaderCell />

@@ -21,7 +21,7 @@ const HistoryRecommend = () => {
             <SheetCard
               key={dateKey}
               desc={`${dateKey}歌曲推荐`}
-              backImgUrl={list[dateKey][0].album?.picUrl}
+              picUrl={list[dateKey][0].album?.picUrl}
               onClick={() => handleClickSheetCard(dateKey)}
             >
               <div className="history-recommend-sheet-box">
