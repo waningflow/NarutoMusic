@@ -4,7 +4,7 @@ import SheetCard from '@/shared/SheetCard';
 import { getHistoryRecommend } from './service';
 import './HistoryRecommend.less';
 
-const HistoryRecomment = () => {
+const HistoryRecommend = () => {
   const list = getHistoryRecommend();
   const history = useHistory();
 
@@ -13,17 +13,25 @@ const HistoryRecomment = () => {
   };
   return (
     <div className="history-recommend-container">
-      {list.map(item => (
-        <SheetCard
-          key={item}
-          desc={`${item}歌曲推荐`}
-          onClick={() => handleClickSheetCard(item)}
-        >
-          <div className="history-recommend-sheet-box">{item.slice(5)}</div>
-        </SheetCard>
-      ))}
+      {Object.keys(list)
+        .reverse() // 时间倒序
+        .slice(1) // 不显示当天
+        .map((dateKey: string) => {
+          return (
+            <SheetCard
+              key={dateKey}
+              desc={`${dateKey}歌曲推荐`}
+              backImgUrl={list[dateKey][0].album?.picUrl}
+              onClick={() => handleClickSheetCard(dateKey)}
+            >
+              <div className="history-recommend-sheet-box">
+                {dateKey.slice(5)}
+              </div>
+            </SheetCard>
+          );
+        })}
     </div>
   );
 };
 
-export default HistoryRecomment;
+export default HistoryRecommend;

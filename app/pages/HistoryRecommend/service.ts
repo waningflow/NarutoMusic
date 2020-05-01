@@ -1,8 +1,9 @@
 import { storage } from '@/storage';
+import { Music } from '@/types';
 import { lsKey } from '@/constants/const';
 
-function getHistoryRecommend(): string[] {
-  return storage.get(lsKey.HistoryRecommendKeys) || [];
+function getHistoryRecommend(): { [dateKey: string]: Music[] } {
+  return storage.get(lsKey.HistoryRecommend) || [];
 }
 
 export { getHistoryRecommend };
