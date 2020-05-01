@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Nav, Icon } from 'rsuite';
 import { MenuItem } from '@/types';
-import { menuList } from '@/constants/const';
+import { menuList } from '@/constants/router';
 import { State as StateType } from '@/reducers';
 import './SideMenu.less';
 
@@ -14,14 +14,13 @@ const SideMenu = () => {
 
   const handleSelect = (key: string) => {
     if (key === activeKey) return;
-    setActiveKey(key);
     const item: MenuItem = menuList.find(v => v.key === key) || menuList[0];
     history.push(item.href);
   };
 
   useEffect(() => {
-    const item = menuList.find(
-      v => v.href === location.pathname + location.search
+    const item = menuList.find(v =>
+      (location.pathname + location.search).startsWith(v.path || v.href)
     );
     if (item) {
       setActiveKey(item.key);
@@ -37,15 +36,11 @@ const SideMenu = () => {
   return (
     <div className="side-menu-container">
       <Nav vertical activeKey={activeKey} onSelect={handleSelect} style={{}}>
-        {/* <Nav.Item eventKey="home" icon={<Icon icon="home" />}>
-          Home
-        </Nav.Item> */}
         {menuList
           .filter(item => !item.hidden)
           .map(item => (
             <Nav.Item eventKey={item.key} key={item.key}>
               {item.label}
-              {/* <Link to={item.href}>{item.label}</Link> */}
             </Nav.Item>
           ))}
       </Nav>

@@ -1,7 +1,7 @@
 import React from 'react';
 
 const MusicFind = () => {
-  return <div>MusicFind</div>;
+  return <div>unused</div>;
 };
 
 export default MusicFind;

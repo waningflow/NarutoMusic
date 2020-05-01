@@ -1,16 +1,12 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import routes from '@/constants/routes.json';
+import { routerConfig } from '@/constants/router';
 import App from '@/containers/App';
 import Header from '@/containers/Header';
 import Sidebar from '@/containers/Sidebar';
 import Footer from '@/containers/Footer';
 import Content from '@/containers/Content';
 import Layout from '@/containers/Layout';
-import Home from '@/pages/Home';
-import MusicSheet from '@/pages/MusicSheet';
-import MusicPlay from '@/pages/MusicPlay';
-import HistoryRecommend from '@/pages/HistoryRecommend';
 
 export default function Routes() {
   return (
@@ -21,14 +17,14 @@ export default function Routes() {
         Content={
           <Content>
             <Switch>
-              <Route path={routes.HOME} exact component={Home} />
-              <Route path={routes.MUSIC_SHEET} component={MusicSheet} />
-              <Route path={routes.MUSIC_PLAY} exact component={MusicPlay} />
-              <Route
-                path={routes.HISTORY_RECOMMEND}
-                exact
-                component={HistoryRecommend}
-              />
+              {routerConfig.map(({ key, path, exact, component }) => (
+                <Route
+                  key={key}
+                  path={path}
+                  exact={exact}
+                  component={component}
+                />
+              ))}
             </Switch>
           </Content>
         }
