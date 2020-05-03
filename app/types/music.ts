@@ -21,7 +21,7 @@ type Album = {
 type Artist = {
   id: number;
   name: string;
-  picUrl: string;
+  picUrl?: string;
 };
 
 type Music = {
@@ -56,4 +56,44 @@ type Sheet = {
   creator?: any;
 };
 
-export { Music, Playlist, Sheet };
+type Track = {
+  id: string;
+  name: string;
+  ar: Artist[];
+  dt: number;
+  al: Album;
+  artists?: Artist[];
+  duration?: number;
+  album?: Album;
+};
+
+type PlaylistDetail = {
+  id: number;
+  name: string;
+  subscribers: any[];
+  subscribed: boolean;
+  creator: any;
+  tracks: Track[];
+  trackIds: { id: string }[];
+  updateFrequency: string;
+  backgroundCoverId: string;
+  backgroundCoverUrl: string;
+  titleImage: string;
+  titleImageUrl: string;
+  englishTitle: string;
+  createTime: number;
+  subscribedCount: number;
+  tags: string[];
+  description: string;
+  ordered: boolean;
+  userId: number;
+  updateTime: number;
+  commentThreadId: string;
+  trackCount: number;
+  coverImgUrl: string;
+  playCount: number;
+  shareCount: number;
+  commentCount: number;
+};
+
+export { Music, Playlist, Sheet, Track, PlaylistDetail };

@@ -1,7 +1,7 @@
 import { pick } from 'lodash';
 // import { mockApi } from '@/utils/utils';
 // import { loginRes, recommendSonsRes } from './mock';
-import { Music, UserInfo, Sheet } from '@/types';
+import { Music, UserInfo, Sheet, PlaylistDetail } from '@/types';
 import axios from './request';
 
 /**
@@ -147,5 +147,20 @@ interface PersonalizedAPIRes {
 export async function personalized() {
   const res = (await axios.get('/personalized')) as PersonalizedAPIRes;
   const { result } = res;
+  return result;
+}
+
+interface PlaylistDetailAPIRes {
+  code: number;
+  playlist: PlaylistDetail;
+  relatedVideos: any;
+  urls: any;
+  privileges: any;
+}
+export async function fetchPlaylistDetail(params: { id: string }) {
+  const res = (await axios.get('/playlist/detail', {
+    params
+  })) as PlaylistDetailAPIRes;
+  const result = res.playlist;
   return result;
 }

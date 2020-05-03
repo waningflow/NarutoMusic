@@ -13,13 +13,21 @@
 @N00: #fff;
 @N1000: #000;
 
-@H050:#ffeded;
-@H100:#f7c8c8;
-@H200:#f0a7a5;
-@H300:#e88884;
-@H400:#e06b65;
-@H500:#d85047;
-@H600:#d14134;
-@H700:#c23121;
-@H800:#ab220f;
-@H900:#8c1401;
+@H050: #ffeded;
+@H100: #f7c8c8;
+@H200: #f0a7a5;
+@H300: #e88884;
+@H400: #e06b65;
+@H500: #d85047;
+@H600: #d14134;
+@H700: #c23121;
+@H800: #ab220f;
+@H900: #8c1401;
+
+.linesEllipsis(@x) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: @x;
+}

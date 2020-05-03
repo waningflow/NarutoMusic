@@ -1,0 +1,49 @@
+.common-sheet-title-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  .common-sheet-title-pic {
+    margin-right: 20px;
+    .common-sheet-title-pic-text {
+      color: @N00;
+      font-size: 30px;
+      font-weight: 600;
+      width: 100%;
+      text-align: center;
+      background-color: @N600;
+      opacity: 0.7;
+      &.is-today {
+        background-color: @H600;
+      }
+    }
+  }
+  .common-sheet-title-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .common-sheet-title {
+    font-size: 22px;
+    font-weight: 800;
+    height: 34px;
+    line-height: 34px;
+    color: @N800;
+  }
+  .common-sheet-subtitle {
+    color: @N600;
+    line-height: 22px;
+    .linesEllipsis(2);
+  }
+  button {
+    border-radius: 15px;
+    width: 100px;
+    font-size: 13px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    i {
+      margin-right: 5px;
+    }
+  }
+}

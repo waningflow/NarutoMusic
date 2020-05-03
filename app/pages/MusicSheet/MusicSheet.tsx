@@ -7,45 +7,21 @@ import { updatePlaylist } from '@/actions/playlist';
 import { getSongUrls, getSongUrls2 } from '@/utils/ls';
 import { Music } from '@/types';
 import { State as StateType } from '@/reducers';
-import SheetCard from '@/shared/SheetCard';
-import { log, getRecommendSongs, getHistoryRecommendSongs } from './service';
+import {
+  log,
+  getRecommendSongs,
+  getHistoryRecommendSongs,
+  getPlaylistDetail
+} from './service';
 import './MusicSheet.less';
+import { DaySheetTitle, CommonSheetTitle } from './components';
 
 const { Column, HeaderCell, Cell } = Table;
 
-const MusicSheetTitle = (props: {
-  onClickPlayAll: () => void;
-  date: string;
-  picUrl: string;
-}) => {
-  const { onClickPlayAll, date, picUrl } = props;
-  return (
-    <div className="music-sheet-title-container">
-      <div className="music-sheet-title-pic">
-        <SheetCard picUrl={picUrl}>
-          <div
-            className={cn('music-sheet-title-pic-text', {
-              'is-today': date === getToday()
-            })}
-          >
-            {date}
-          </div>
-        </SheetCard>
-      </div>
-      <div className="music-sheet-title-content">
-        <div className="music-sheet-title">
-          {/* <span>{date}</span> */}
-          每日歌曲推荐
-        </div>
-        <div className="music-sheet-subtitle">根据你的音乐口味生成</div>
-        <Button appearance="primary" size="sm" block onClick={onClickPlayAll}>
-          <i className="iconfont iconplay" />
-          播放全部
-        </Button>
-      </div>
-    </div>
-  );
-};
+enum SheetType {
+  DAY = 'day',
+  COMMON = 'common'
+}
 
 const MusicSheet = () => {
   const dispatch = useDispatch();
@@ -53,11 +29,14 @@ const MusicSheet = () => {
   const { location } = useSelector((state: StateType) => state.router);
   const { query } = location;
   const { type } = query;
+  const [sheetType, setSheetType] = useState<SheetType | string>('');
   const [songList, setSongList] = useState<any[]>([]);
   const [date, setDate] = useState(getToday());
+  const [sheetDetail, setSheetDetail] = useState({});
   useEffect(() => {
     (async function update() {
       if (type === 'daily_recommended') {
+        setSheetType(SheetType.DAY);
         setDate(getToday());
         try {
           const songs = await getRecommendSongs();
@@ -66,10 +45,18 @@ const MusicSheet = () => {
           log.err('get recommend songs err');
         }
       } else if (type === 'history_recommend') {
+        setSheetType(SheetType.DAY);
         const d = query.date;
         setDate(d.slice(5));
         const songs = getHistoryRecommendSongs(d);
         if (songs) setSongList(songs);
+      } else if (type === 'common_sheet') {
+        setSheetType(SheetType.COMMON);
+        const sheetId = query.id;
+        const res = await getPlaylistDetail(sheetId);
+        console.log(res);
+        setSheetDetail(res);
+        setSongList(res.tracks);
       }
     })();
   }, [type]);
@@ -114,14 +101,24 @@ const MusicSheet = () => {
       })
     );
   };
-  const picUrl = songList ? songList[0]?.album.picUrl : '';
+  const defaultPicUrl = songList ? songList[0]?.album?.picUrl : '';
+  console.log(sheetType);
+  console.log(sheetDetail);
   return (
     <div className="music-sheet-container">
-      <MusicSheetTitle
-        onClickPlayAll={handlePlayAll}
-        date={date}
-        picUrl={picUrl}
-      />
+      {sheetType === SheetType.DAY && (
+        <DaySheetTitle
+          onClickPlayAll={handlePlayAll}
+          date={date}
+          picUrl={defaultPicUrl}
+        />
+      )}
+      {sheetType === SheetType.COMMON && (
+        <CommonSheetTitle
+          onClickPlayAll={handlePlayAll}
+          playlistDetail={sheetDetail}
+        />
+      )}
       <Table autoHeight data={songList} rowHeight={34} hover={false}>
         <Column width={60} align="center" fixed>
           <HeaderCell />

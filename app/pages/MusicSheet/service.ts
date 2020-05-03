@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { recommendSongs } from '@/api/api';
+import { recommendSongs, fetchPlaylistDetail } from '@/api/api';
 import Logger from '@/utils/logger';
 import { lsKey } from '@/constants/const';
 import { lsGet, lsSet } from '@/utils/utils';
@@ -48,4 +48,12 @@ function getHistoryRecommendSongs(date: string) {
   return storage.get(`${lsKey.HistoryRecommend}.${date}`);
 }
 
-export { log, getRecommendSongs, getHistoryRecommendSongs };
+async function getPlaylistDetail(id: string) {
+  const res = await fetchPlaylistDetail({ id });
+  res.tracks.forEach(v =>
+    Object.assign(v, { artists: v.ar, duration: v.dt, album: v.al })
+  );
+  return res;
+}
+
+export { log, getRecommendSongs, getHistoryRecommendSongs, getPlaylistDetail };
