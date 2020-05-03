@@ -1,7 +1,7 @@
 import { pick } from 'lodash';
 // import { mockApi } from '@/utils/utils';
 // import { loginRes, recommendSonsRes } from './mock';
-import { Music, UserInfo } from '@/types';
+import { Music, UserInfo, Sheet } from '@/types';
 import axios from './request';
 
 /**
@@ -121,5 +121,19 @@ export async function recommendSongs() {
     ]);
     return item;
   });
+  return result;
+}
+
+interface RecommendResourceAPIRes {
+  code: number;
+  recommend: Sheet[];
+  featureFirst: boolean;
+  haveRcmdSongs: boolean;
+}
+export async function recommendResource() {
+  const res = (await axios.get(
+    '/recommend/resource'
+  )) as RecommendResourceAPIRes;
+  const result = res.recommend;
   return result;
 }

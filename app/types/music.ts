@@ -46,4 +46,13 @@ type Playlist = {
   reset: number;
 };
 
-export { Music, Playlist };
+type Sheet = {
+  id: string;
+  name: string;
+  picUrl: string;
+  playcount: number;
+  createTime: number;
+  creator: any;
+};
+
+export { Music, Playlist, Sheet };

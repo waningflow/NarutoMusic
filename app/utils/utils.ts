@@ -76,4 +76,18 @@ function getToday() {
   return moment().format('MM-DD');
 }
 
-export { sleep, mockApi, parseTime, num2str, findNext, lsGet, lsSet, getToday };
+function parsePlaycount(num: number) {
+  return num >= 100000 ? `${Math.floor(num / 10000)}万` : num;
+}
+
+export {
+  sleep,
+  mockApi,
+  parseTime,
+  num2str,
+  findNext,
+  lsGet,
+  lsSet,
+  getToday,
+  parsePlaycount
+};

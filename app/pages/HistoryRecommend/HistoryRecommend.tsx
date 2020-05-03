@@ -20,7 +20,7 @@ const HistoryRecommend = () => {
           return (
             <SheetCard
               key={dateKey}
-              desc={`${dateKey}歌曲推荐`}
+              // desc={`${dateKey}歌曲推荐`}
               picUrl={list[dateKey][0].album?.picUrl}
               onClick={() => handleClickSheetCard(dateKey)}
             >

@@ -1,6 +1,7 @@
 .sheet-card-container {
   display: flex;
   flex-direction: column;
+  position: relative;
   .sheet-card-box {
     width: 132px;
     height: 132px;
@@ -20,5 +21,13 @@
     line-height: 20px;
     font-size: 13px;
     cursor: pointer;
+  }
+  .sheet-card-playcount {
+    position: absolute;
+    top: 2px;
+    right: 6px;
+    color: @N00;
+    font-size: 13px;
+    font-weight: 500;
   }
 }
