@@ -137,3 +137,15 @@ export async function recommendResource() {
   const result = res.recommend;
   return result;
 }
+
+interface PersonalizedAPIRes {
+  code: number;
+  category: number;
+  hasTaste: boolean;
+  result: Sheet[];
+}
+export async function personalized() {
+  const res = (await axios.get('/personalized')) as PersonalizedAPIRes;
+  const { result } = res;
+  return result;
+}

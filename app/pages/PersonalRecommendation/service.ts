@@ -1,7 +1,8 @@
-import { recommendResource } from '@/api/api';
+import { personalized } from '@/api/api';
 
 function getRecommendResource() {
-  return recommendResource();
+  // return recommendResource();
+  return personalized();
 }
 
 export { getRecommendResource };
