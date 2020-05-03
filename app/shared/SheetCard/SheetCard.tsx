@@ -21,7 +21,12 @@ const SheetCard = (props: Props) => {
       </div>
       {desc && <div className="sheet-card-desc">{desc}</div>}
       {playcount && (
-        <div className="sheet-card-playcount">{parsePlaycount(playcount)}</div>
+        <div className="sheet-card-playcount-container">
+          <div className="sheet-card-playcount">
+            <i className="iconfont iconplay1" />
+            {parsePlaycount(playcount)}
+          </div>
+        </div>
       )}
     </div>
   );

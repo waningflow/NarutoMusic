@@ -21,13 +21,38 @@
     line-height: 20px;
     font-size: 13px;
     cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
   }
-  .sheet-card-playcount {
+  .sheet-card-playcount-container {
     position: absolute;
-    top: 2px;
-    right: 6px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-start;
     color: @N00;
     font-size: 13px;
     font-weight: 500;
+    padding-right: 6px;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0));
+    border-radius: 4px;
+    .sheet-card-playcount {
+      height: 20px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+    .iconplay1 {
+      font-size: 12px;
+      margin-right: 1px;
+      line-height: 12px;
+    }
   }
 }
