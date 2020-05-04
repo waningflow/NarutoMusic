@@ -57,8 +57,8 @@ function CommonSheetTitle(props: Props) {
 
         {tags && (
           <div className="common-sheet-tags">
-            <span>标签：</span>
-            {tags.join('/')}
+            <span>标签</span>
+            {`：${tags.join('/')}`}
           </div>
         )}
         {(trackCount || playCount) && (
@@ -78,10 +78,10 @@ function CommonSheetTitle(props: Props) {
           </div>
         )}
         <Collapse>
-          <div className="common-sheet-desc">
-            <span>简介：</span>
-            {description}
-          </div>
+          <pre className="common-sheet-desc">
+            <span>简介</span>
+            {`：${description}`}
+          </pre>
         </Collapse>
       </div>
     </div>
