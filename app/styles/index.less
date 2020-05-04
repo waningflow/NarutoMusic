@@ -9,3 +9,49 @@
     margin: 0;
   }
 }
+
+#app-content-container {
+  .page-content-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 1000px;
+    margin: 0 auto;
+    .sheet-card-container {
+      .sheet-card-box {
+        width: 100%;
+        padding-top: 100%;
+      }
+      .sheet-card-desc {
+        width: 100%;
+      }
+    }
+  }
+}
+
+@media (max-width: 1060px) {
+  #app-content-container {
+    .page-content-container {
+      .sheet-card-container {
+        width: calc((100% - 48px) / 4);
+        &:nth-child(4n) {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 1060px) {
+  #app-content-container {
+    .page-content-container {
+      .sheet-card-container {
+        // flex-basis: 16% !important;
+        width: calc((100% - 64px) / 5) !important;
+        &:nth-child(5n) {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}

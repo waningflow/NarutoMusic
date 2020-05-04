@@ -13,23 +13,25 @@ const HistoryRecommend = () => {
   };
   return (
     <div className="history-recommend-container">
-      {Object.keys(list)
-        .reverse() // 时间倒序
-        .slice(1) // 不显示当天
-        .map((dateKey: string) => {
-          return (
-            <SheetCard
-              key={dateKey}
-              // desc={`${dateKey}歌曲推荐`}
-              picUrl={list[dateKey][0].album?.picUrl}
-              onClick={() => handleClickSheetCard(dateKey)}
-            >
-              <div className="history-recommend-sheet-box">
-                {dateKey.slice(5)}
-              </div>
-            </SheetCard>
-          );
-        })}
+      <div className="page-content-container">
+        {Object.keys(list)
+          .reverse() // 时间倒序
+          .slice(1) // 不显示当天
+          .map((dateKey: string) => {
+            return (
+              <SheetCard
+                key={dateKey}
+                // desc={`${dateKey}歌曲推荐`}
+                picUrl={list[dateKey][0].album?.picUrl}
+                onClick={() => handleClickSheetCard(dateKey)}
+              >
+                <div className="history-recommend-sheet-box">
+                  {dateKey.slice(5)}
+                </div>
+              </SheetCard>
+            );
+          })}
+      </div>
     </div>
   );
 };

@@ -23,15 +23,17 @@ function PersonalRecommendation() {
   };
   return (
     <div className="personal-rcmd-container">
-      {resource.map(({ id, name, picUrl, playCount }) => (
-        <SheetCard
-          key={id}
-          desc={name}
-          picUrl={picUrl}
-          playcount={playCount}
-          onClick={() => handleClickSheetCard(id)}
-        />
-      ))}
+      <div className="page-content-container">
+        {resource.map(({ id, name, picUrl, playCount }) => (
+          <SheetCard
+            key={id}
+            desc={name}
+            picUrl={picUrl}
+            playcount={playCount}
+            onClick={() => handleClickSheetCard(id)}
+          />
+        ))}
+      </div>
     </div>
   );
 }
