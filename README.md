@@ -2,11 +2,12 @@
 
 基于 Electron 框架实现的网易云音乐精（qi）简（gai）版  
 灵感来自 [Binaryify/NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi)  
-当前版本 [v1.0.0-beta1](https://github.com/waningflow/NarutoMusic/releases/tag/v1.0.0-beta1)，可下载体验
+当前版本 [v1.0.0-beta2](https://github.com/waningflow/NarutoMusic/releases/tag/v1.0.0-beta2)，可下载体验
 
 ## 界面预览
 
-<img src="./resources/screen/naruto-music-1.0.0-beta1.png">
+<img src="./resources/screen/naruto-music-1.0.0-beta2-page1.png">
+<img src="./resources/screen/naruto-music-1.0.0-beta2-page2.png">
 
 ## RoadMap
 
