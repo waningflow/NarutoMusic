@@ -80,6 +80,13 @@ function parsePlaycount(num: number) {
   return num >= 100000 ? `${Math.floor(num / 10000)}万` : num;
 }
 
+function getDate(num: number) {
+  if (!num) return '';
+  return moment(num)
+    .add(8, 'h')
+    .format('YYYY-MM-DD');
+}
+
 export {
   sleep,
   mockApi,
@@ -89,5 +96,6 @@ export {
   lsGet,
   lsSet,
   getToday,
-  parsePlaycount
+  parsePlaycount,
+  getDate
 };

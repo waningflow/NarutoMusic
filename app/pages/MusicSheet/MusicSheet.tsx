@@ -32,7 +32,7 @@ const MusicSheet = () => {
   const [sheetType, setSheetType] = useState<SheetType | string>('');
   const [songList, setSongList] = useState<any[]>([]);
   const [date, setDate] = useState(getToday());
-  const [sheetDetail, setSheetDetail] = useState({});
+  const [sheetDetail, setSheetDetail] = useState();
   useEffect(() => {
     (async function update() {
       if (type === 'daily_recommended') {
@@ -54,7 +54,6 @@ const MusicSheet = () => {
         setSheetType(SheetType.COMMON);
         const sheetId = query.id;
         const res = await getPlaylistDetail(sheetId);
-        console.log(res);
         setSheetDetail(res);
         setSongList(res.tracks);
       }
@@ -102,8 +101,6 @@ const MusicSheet = () => {
     );
   };
   const defaultPicUrl = songList ? songList[0]?.album?.picUrl : '';
-  console.log(sheetType);
-  console.log(sheetDetail);
   return (
     <div className="music-sheet-container">
       {sheetType === SheetType.DAY && (

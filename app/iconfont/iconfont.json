@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "8174047",
+      "name": "下拉",
+      "font_class": "xiala",
+      "unicode": "e640",
+      "unicode_decimal": 58944
+    },
+    {
       "icon_id": "708724",
       "name": "play",
       "font_class": "play1",

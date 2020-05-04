@@ -1,0 +1,21 @@
+.collapse-container {
+  position: relative;
+  height: auto;
+  .collapse-btn {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    transform: rotate(180deg);
+    i {
+      font-size: 12px;
+      color: @N500;
+    }
+  }
+  &.collapsed {
+    height: 22px;
+    .linesEllipsis(1);
+    .collapse-btn {
+      transform: rotate(0deg);
+    }
+  }
+}

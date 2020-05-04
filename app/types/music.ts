@@ -67,12 +67,25 @@ type Track = {
   album?: Album;
 };
 
+type Creator = {
+  accountStatus: number;
+  avatarUrl: string;
+  backgroundUrl: string;
+  birthday: number;
+  city: number;
+  gender: number;
+  nickname: string;
+  province: number;
+  signature: string;
+  userId: number;
+};
+
 type PlaylistDetail = {
   id: number;
   name: string;
   subscribers: any[];
   subscribed: boolean;
-  creator: any;
+  creator: Creator;
   tracks: Track[];
   trackIds: { id: string }[];
   updateFrequency: string;

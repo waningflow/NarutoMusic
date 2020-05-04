@@ -2,25 +2,19 @@
   padding: 20px;
   display: flex;
   flex-direction: row;
+  color: @N600;
   .common-sheet-title-pic {
     margin-right: 20px;
-    .common-sheet-title-pic-text {
-      color: @N00;
-      font-size: 30px;
-      font-weight: 600;
-      width: 100%;
-      text-align: center;
-      background-color: @N600;
-      opacity: 0.7;
-      &.is-today {
-        background-color: @H600;
-      }
+    .sheet-card-box {
+      width: 200px;
+      height: 200px;
     }
   }
   .common-sheet-title-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    // display: flex;
+    // flex-direction: column;
+    // justify-content: space-between;
+    flex: 1;
   }
   .common-sheet-title {
     font-size: 22px;
@@ -29,10 +23,47 @@
     line-height: 34px;
     color: @N800;
   }
-  .common-sheet-subtitle {
-    color: @N600;
+
+  .common-sheet-creator {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 15px;
+    .creator-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 10px;
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      margin-right: 6px;
+    }
+    .creator-nickname {
+      margin-right: 8px;
+    }
+  }
+
+  .common-sheet-tags {
     line-height: 22px;
-    .linesEllipsis(2);
+    span {
+      color: @N700;
+    }
+  }
+  .common-sheet-count {
+    line-height: 22px;
+    span {
+      color: @N700;
+    }
+  }
+  .common-sheet-desc {
+    line-height: 22px;
+    padding-right: 50px;
+    span {
+      color: @N700;
+    }
+  }
+  .common-title-btn-group {
+    margin-bottom: 16px;
   }
   button {
     border-radius: 15px;
