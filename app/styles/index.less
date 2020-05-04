@@ -10,6 +10,8 @@
   }
 }
 
+@screen-width: 999px;
+
 #app-content-container {
   .page-content-container {
     width: 100%;
@@ -29,7 +31,7 @@
   }
 }
 
-@media (max-width: 1060px) {
+@media (max-width: @screen-width) {
   #app-content-container {
     .page-content-container {
       .sheet-card-container {
@@ -42,7 +44,7 @@
   }
 }
 
-@media (min-width: 1060px) {
+@media (min-width: @screen-width) {
   #app-content-container {
     .page-content-container {
       .sheet-card-container {
