@@ -1,0 +1,24 @@
+.panel-container {
+  .panel-header {
+    float: left;
+    height: 20px;
+    line-height: 20px;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    cursor: pointer;
+    i {
+      margin-left: 10px;
+      font-weight: normal;
+      transform: rotate(90deg);
+      &.icon-collapsed {
+        transform: rotate(0deg);
+      }
+    }
+  }
+  .panel-content {
+    &.panel-content-collapsed {
+      display: none;
+    }
+  }
+}

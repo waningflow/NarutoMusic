@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { Sheet } from '@/types';
 import SheetCard from '@/shared/SheetCard';
 import Loading from '@/shared/Loading';
+import Panel from '@/shared/Panel';
 import { getRecommendResource } from './service';
 import './PersonalRecommendation.less';
 
@@ -28,17 +29,19 @@ function PersonalRecommendation() {
   if (loading) return <Loading />;
   return (
     <div className="personal-rcmd-container">
-      <div className="page-content-container">
-        {resource.map(({ id, name, picUrl, playCount }) => (
-          <SheetCard
-            key={id}
-            desc={name}
-            picUrl={picUrl}
-            playcount={playCount}
-            onClick={() => handleClickSheetCard(id)}
-          />
-        ))}
-      </div>
+      <Panel title="推荐歌单">
+        <div className="page-content-container">
+          {resource.map(({ id, name, picUrl, playCount }) => (
+            <SheetCard
+              key={id}
+              desc={name}
+              picUrl={picUrl}
+              playcount={playCount}
+              onClick={() => handleClickSheetCard(id)}
+            />
+          ))}
+        </div>
+      </Panel>
     </div>
   );
 }
