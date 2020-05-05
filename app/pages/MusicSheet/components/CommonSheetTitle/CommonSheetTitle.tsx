@@ -42,10 +42,12 @@ function CommonSheetTitle(props: Props) {
               style={{ backgroundImage: `url(${avatarUrl})` }}
             />
             <div className="creator-nickname">{nickname}</div>
-            <div className="creator-time">
-              {getDate(createTime)}
-              创建
-            </div>
+            {createTime && (
+              <div className="creator-time">
+                {getDate(createTime)}
+                创建
+              </div>
+            )}
           </div>
         )}
         <div className="common-title-btn-group">
@@ -77,12 +79,14 @@ function CommonSheetTitle(props: Props) {
             )}
           </div>
         )}
-        <Collapse>
-          <pre className="common-sheet-desc">
-            <span>简介</span>
-            {`：${description}`}
-          </pre>
-        </Collapse>
+        {description && (
+          <Collapse>
+            <pre className="common-sheet-desc">
+              <span>简介</span>
+              {`：${description}`}
+            </pre>
+          </Collapse>
+        )}
       </div>
     </div>
   );

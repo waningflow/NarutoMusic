@@ -7,6 +7,7 @@ import { updatePlaylist } from '@/actions/playlist';
 import { getSongUrls, getSongUrls2 } from '@/utils/ls';
 import { Music } from '@/types';
 import { State as StateType } from '@/reducers';
+import Loading from '@/shared/Loading';
 import {
   log,
   getRecommendSongs,
@@ -33,8 +34,10 @@ const MusicSheet = () => {
   const [songList, setSongList] = useState<any[]>([]);
   const [date, setDate] = useState(getToday());
   const [sheetDetail, setSheetDetail] = useState();
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     (async function update() {
+      setLoading(true);
       if (type === 'daily_recommended') {
         setSheetType(SheetType.DAY);
         setDate(getToday());
@@ -57,6 +60,7 @@ const MusicSheet = () => {
         setSheetDetail(res);
         setSongList(res.tracks);
       }
+      setLoading(false);
     })();
   }, [type]);
 
@@ -101,6 +105,7 @@ const MusicSheet = () => {
     );
   };
   const defaultPicUrl = songList ? songList[0]?.album?.picUrl : '';
+  if (loading) return <Loading />;
   return (
     <div className="music-sheet-container">
       {sheetType === SheetType.DAY && (
