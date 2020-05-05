@@ -13,6 +13,7 @@ const SideMenu = () => {
   const { location } = useSelector((state: StateType) => state.router);
 
   const handleSelect = (key: string) => {
+    console.log(key);
     if (key === activeKey) return;
     const item: MenuItem = menuList.find(v => v.key === key) || menuList[0];
     history.push(item.href);
