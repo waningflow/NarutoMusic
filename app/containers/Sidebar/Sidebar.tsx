@@ -1,7 +1,6 @@
 import React from 'react';
-
-import ProfileBar from '@/components/ProfileBar';
-import SideMenu from '@/components/SideMenu';
+import ProfileBar from './components/ProfileBar';
+import SideMenu from './components/SideMenu';
 import styles from './Sidebar.css';
 
 const Sidebar = () => {
