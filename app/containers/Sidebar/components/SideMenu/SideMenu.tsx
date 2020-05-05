@@ -5,6 +5,7 @@ import { Nav, Icon } from 'rsuite';
 import { MenuItem } from '@/types';
 import { menuList } from '@/constants/router';
 import { State as StateType } from '@/reducers';
+import { uuid } from '@/utils/utils';
 import './SideMenu.less';
 
 const SideMenu = () => {
@@ -15,7 +16,7 @@ const SideMenu = () => {
   const handleSelect = (key: string) => {
     if (key === activeKey) return;
     const item: MenuItem = menuList.find(v => v.key === key) || menuList[0];
-    history.push(item.href);
+    history.push(`${item.href}#${uuid()}`);
   };
 
   useEffect(() => {

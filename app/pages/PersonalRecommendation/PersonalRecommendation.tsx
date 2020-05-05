@@ -4,6 +4,7 @@ import { Sheet } from '@/types';
 import SheetCard from '@/shared/SheetCard';
 import Loading from '@/shared/Loading';
 import Panel from '@/shared/Panel';
+import { uuid } from '@/utils/utils';
 import { getRecommendResource } from './service';
 import './PersonalRecommendation.less';
 
@@ -24,7 +25,7 @@ function PersonalRecommendation() {
     })();
   }, []);
   const handleClickSheetCard = (id: string) => {
-    history.push(`/music_sheet?type=common_sheet&id=${id}`);
+    history.push(`/music_sheet?type=common_sheet&id=${id}#${uuid()}`);
   };
   if (loading) return <Loading />;
   return (

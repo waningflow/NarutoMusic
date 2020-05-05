@@ -5,6 +5,7 @@ import cn from 'classnames';
 import { State as StateType } from '@/reducers';
 import { MenuItem } from '@/types';
 import { menuList } from '@/constants/router';
+import { uuid } from '@/utils/utils';
 import './HeaderMenu.less';
 
 // const menu: MenuItem[] = [];
@@ -35,7 +36,7 @@ function HeaderMenu() {
   function handleClickMenu(key: string) {
     if (key === selectedItem?.key) return;
     const item: MenuItem | undefined = menu.find(v => v.key === key);
-    if (item) history.push(item.href);
+    if (item) history.push(`${item.href}#${uuid()}`);
   }
 
   return (

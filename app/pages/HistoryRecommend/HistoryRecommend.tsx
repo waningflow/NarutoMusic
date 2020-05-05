@@ -1,6 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import SheetCard from '@/shared/SheetCard';
+import { uuid } from '@/utils/utils';
 import { getHistoryRecommend } from './service';
 import './HistoryRecommend.less';
 
@@ -9,7 +10,7 @@ const HistoryRecommend = () => {
   const history = useHistory();
 
   const handleClickSheetCard = (date: string) => {
-    history.push(`/music_sheet?type=history_recommend&date=${date}`);
+    history.push(`/music_sheet?type=history_recommend&date=${date}#${uuid()}`);
   };
   return (
     <div className="history-recommend-container">
