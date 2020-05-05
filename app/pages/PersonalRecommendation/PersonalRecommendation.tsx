@@ -29,8 +29,8 @@ function PersonalRecommendation() {
   if (loading) return <Loading />;
   return (
     <div className="personal-rcmd-container">
-      <Panel title="推荐歌单">
-        <div className="page-content-container">
+      <div className="page-content-container">
+        <Panel title="推荐歌单">
           {resource.map(({ id, name, picUrl, playCount }) => (
             <SheetCard
               key={id}
@@ -40,8 +40,8 @@ function PersonalRecommendation() {
               onClick={() => handleClickSheetCard(id)}
             />
           ))}
-        </div>
-      </Panel>
+        </Panel>
+      </div>
     </div>
   );
 }
