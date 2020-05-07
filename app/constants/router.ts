@@ -73,8 +73,7 @@ const menuList: MenuItem[] = [
       {
         key: 'SHEET_FIND',
         label: '歌单',
-        href: '/music_find/sheet_find',
-        hidden: true
+        href: '/music_find/sheet_find'
       },
       {
         key: 'RANKING_LIST',
